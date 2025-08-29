@@ -218,6 +218,7 @@ public class frmUnidade extends frmGenericomodal {
         lblEmail.setText("EMAIL*");
 
         lblTitulo.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        lblTitulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblTitulo.setText("UNIDADES");
 
         lblPesquisa.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
@@ -266,11 +267,9 @@ public class frmUnidade extends frmGenericomodal {
                     .addGroup(panSuperiorLayout.createSequentialGroup()
                         .addComponent(lblPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtBusca, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(panSuperiorLayout.createSequentialGroup()
-                        .addGap(302, 302, 302)
-                        .addComponent(lblTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(txtBusca, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(lblTitulo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         panSuperiorLayout.setVerticalGroup(
             panSuperiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

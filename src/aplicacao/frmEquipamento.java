@@ -203,6 +203,7 @@ public class frmEquipamento extends frmGenericomodal {
         lblIdfabricante.setText("FABRICANTE*");
 
         lblTitulo.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        lblTitulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblTitulo.setText("EQUIPAMENTOS");
 
         lblPesquisa.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
@@ -236,11 +237,8 @@ public class frmEquipamento extends frmGenericomodal {
                         .addGroup(panSuperiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                             .addComponent(lblIdfabricante, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(cmbIdfabricante, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(427, 427, 427))))
-            .addGroup(panSuperiorLayout.createSequentialGroup()
-                .addGap(277, 277, 277)
-                .addComponent(lblTitulo)
-                .addGap(0, 0, Short.MAX_VALUE))
+                        .addGap(427, 427, 427))
+                    .addComponent(lblTitulo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
         panSuperiorLayout.setVerticalGroup(
             panSuperiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

@@ -75,42 +75,33 @@
                       </Group>
                       <Group type="102" attributes="0">
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="102" attributes="0">
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="lblEquipamento" min="-2" pref="102" max="-2" attributes="0"/>
-                                      <Component id="cmbEquipamento" min="-2" pref="180" max="-2" attributes="0"/>
-                                  </Group>
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="lblNumserie" alignment="0" min="-2" pref="108" max="-2" attributes="0"/>
-                                      <Component id="txtNumserie" alignment="0" min="-2" pref="108" max="-2" attributes="0"/>
-                                  </Group>
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="lblTipomovimentacao" min="-2" pref="103" max="-2" attributes="0"/>
-                                      <Component id="cmbTipomovimentacao" min="-2" pref="108" max="-2" attributes="0"/>
-                                  </Group>
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="lblOrigem" min="-2" pref="110" max="-2" attributes="0"/>
-                                      <Component id="cmbOrigem" min="-2" pref="126" max="-2" attributes="0"/>
-                                  </Group>
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Group type="103" groupAlignment="2" attributes="0">
-                                      <Component id="lblUsuarioliberacao" alignment="2" min="-2" pref="111" max="-2" attributes="0"/>
-                                      <Component id="cmbUsuarioliberacao" alignment="1" max="32767" attributes="0"/>
-                                  </Group>
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                      <Component id="lblDestino" max="32767" attributes="0"/>
-                                      <Component id="cmbDestino" pref="101" max="32767" attributes="0"/>
-                                  </Group>
-                              </Group>
-                              <Group type="102" alignment="1" attributes="0">
-                                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                                  <Component id="lblTitulo" min="-2" pref="156" max="-2" attributes="0"/>
-                                  <EmptySpace min="-2" pref="184" max="-2" attributes="0"/>
-                              </Group>
+                              <Component id="lblEquipamento" min="-2" pref="102" max="-2" attributes="0"/>
+                              <Component id="cmbEquipamento" min="-2" pref="180" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="lblNumserie" alignment="0" min="-2" pref="108" max="-2" attributes="0"/>
+                              <Component id="txtNumserie" alignment="0" min="-2" pref="108" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="lblTipomovimentacao" min="-2" pref="103" max="-2" attributes="0"/>
+                              <Component id="cmbTipomovimentacao" min="-2" pref="108" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="lblOrigem" min="-2" pref="110" max="-2" attributes="0"/>
+                              <Component id="cmbOrigem" min="-2" pref="126" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="2" attributes="0">
+                              <Component id="lblUsuarioliberacao" alignment="2" min="-2" pref="111" max="-2" attributes="0"/>
+                              <Component id="cmbUsuarioliberacao" alignment="1" max="32767" attributes="0"/>
+                          </Group>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                              <Component id="lblDestino" max="32767" attributes="0"/>
+                              <Component id="cmbDestino" pref="101" max="32767" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="2" attributes="0">
@@ -125,6 +116,10 @@
                           <EmptySpace min="-2" pref="171" max="-2" attributes="0"/>
                       </Group>
                   </Group>
+              </Group>
+              <Group type="102" alignment="0" attributes="0">
+                  <Component id="lblTitulo" min="-2" pref="1028" max="-2" attributes="0"/>
+                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -220,6 +215,7 @@
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Segoe UI" size="18" style="1"/>
             </Property>
+            <Property name="horizontalAlignment" type="int" value="0"/>
             <Property name="text" type="java.lang.String" value="MOVIMENTA&#xc7;&#xc3;O"/>
           </Properties>
         </Component>

@@ -54,26 +54,28 @@ public class PermissaomoduloDAOJDBC implements PermissaomoduloDAO{
         return linha;
     }
 
-    //Listar Usuários
-   /* @Override
+    //8Listar Usuários
+    @Override
     public List<Permissaomodulo> listar() {
         ResultSet rset;
-        String select = "SELECT m.nome, pm.ver, pm.criar, pm.editar, pm.deletar "
-                      + "FROM usuarios u JOIN permissao p ON u.id_permissao = p.id JOIN permissaomodulo pm ON p.id = pm.id_permissao JOIN modulo m ON pm.id_modulo = m.id ;";
-                      //+ "WHERE u.id = ?;";
+        String select = "SELECT p.id AS id_permissao, p.nome AS nome_permissao, m.id AS id_modulo, m.nome AS nome_modulo, pm.inserir, pm.alterar, pm.excluir, pm.visualizar\n" +
+                        "FROM permissaomodulo pm\n" +
+                        "JOIN permissao p ON pm.id_permissao = p.id \n" +
+                        "JOIN modulo m ON pm.id_modulo = m.id\n" +
+                        "ORDER BY pm.id";
         List<Permissaomodulo> permissaomodulos = new ArrayList<>();
         try {        
             rset = DAOGenerico.executarConsulta(select);
             while (rset.next()) {
-                Permissaomodulo permissaomodulo = new Permissaomodulo();
+                Permissaomodulo pm = new Permissaomodulo();
                 //permissaomodulo. setUid(rset.getInt("uid"));
                 //permissaomodulo.setId_permissao(rset.getInt("id_permissao"));
-                permissaomodulo.setMnome(rset.getString("m.nome"));
-                permissaomodulo.setVer(rset.getBoolean("ver"));
-                permissaomodulo.setCriar(rset.getBoolean("criar"));
-                permissaomodulo.setEditar(rset.getBoolean("editar"));
-                permissaomodulo.setExcluir(rset.getBoolean("deletar"));
-                permissaomodulos.add(permissaomodulo);
+                //permissaomodulo.setMnome(rset.getString("m.nome"));
+                pm.setInserir(rset.getBoolean("inserir"));
+                pm.setAlterar(rset.getBoolean("alterar"));
+                pm.setExcluir(rset.getBoolean("excluir"));
+                pm.setVisualizar(rset.getBoolean("visualizar"));
+                permissaomodulos.add(pm);
                 
             }
           
@@ -81,7 +83,7 @@ public class PermissaomoduloDAOJDBC implements PermissaomoduloDAO{
             e.printStackTrace();
         } 
         return permissaomodulos;
-    }*/
+    }
     
      //Listar um único Usuário.
     @Override
@@ -106,6 +108,7 @@ public class PermissaomoduloDAOJDBC implements PermissaomoduloDAO{
 
                 Permissao permissao = new Permissao();
                 permissao.setId(rset.getInt("id"));
+                
                 Permissaomodulo pm = new Permissaomodulo();
                 pm.setId(rset.getInt("id"));
                 pm.setModulo(modulo);

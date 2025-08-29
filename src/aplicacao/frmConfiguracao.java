@@ -169,7 +169,6 @@ public class frmConfiguracao extends frmGenericomodal {
         btnEditar = new javax.swing.JButton();
         btnVoltar = new javax.swing.JButton();
         btnLimpar = new javax.swing.JButton();
-        radModulo = new javax.swing.JRadioButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("EstoqControl - Usuários");
@@ -195,7 +194,9 @@ public class frmConfiguracao extends frmGenericomodal {
         lblModulo.setText("MÓDULO*");
 
         lblTitulo.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        lblTitulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblTitulo.setText("CONFIGURAÇÃO");
+        lblTitulo.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
         chkInserir.setText("INSERIR");
 
@@ -223,10 +224,6 @@ public class frmConfiguracao extends frmGenericomodal {
         panSuperiorLayout.setHorizontalGroup(
             panSuperiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panSuperiorLayout.createSequentialGroup()
-                .addGap(194, 194, 194)
-                .addComponent(lblTitulo)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(panSuperiorLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(panSuperiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panSuperiorLayout.createSequentialGroup()
@@ -250,6 +247,7 @@ public class frmConfiguracao extends frmGenericomodal {
                                 .addComponent(chkVisualizar)))
                         .addGap(0, 51, Short.MAX_VALUE)))
                 .addContainerGap())
+            .addComponent(lblTitulo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         panSuperiorLayout.setVerticalGroup(
             panSuperiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -333,8 +331,6 @@ public class frmConfiguracao extends frmGenericomodal {
             }
         });
 
-        radModulo.setText("Habilitar Campo Módulo para Edição");
-
         javax.swing.GroupLayout panInferiorLayout = new javax.swing.GroupLayout(panInferior);
         panInferior.setLayout(panInferiorLayout);
         panInferiorLayout.setHorizontalGroup(
@@ -351,19 +347,13 @@ public class frmConfiguracao extends frmGenericomodal {
                         .addGap(0, 27, Short.MAX_VALUE))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addContainerGap())
-            .addGroup(panInferiorLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(radModulo)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         panInferiorLayout.setVerticalGroup(
             panInferiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panInferiorLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(radModulo)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 48, Short.MAX_VALUE)
                 .addGroup(panInferiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(btnEditar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnLimpar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -614,7 +604,6 @@ public class frmConfiguracao extends frmGenericomodal {
     private javax.swing.JLabel lblTitulo;
     private javax.swing.JPanel panInferior;
     private javax.swing.JPanel panSuperior;
-    private javax.swing.JRadioButton radModulo;
     private javax.swing.JTable tblModulo;
     private javax.swing.JTextField txtModulo;
     // End of variables declaration//GEN-END:variables

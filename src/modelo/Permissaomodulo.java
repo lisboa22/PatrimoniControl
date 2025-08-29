@@ -15,7 +15,7 @@ public class Permissaomodulo {
     private int id;
     private Permissao permissao;
     private Modulo modulo;
-    private String mnome;
+    //private String mnome;
     private boolean visualizar;
     private boolean inserir;
     private boolean alterar;
@@ -46,13 +46,13 @@ public class Permissaomodulo {
         this.modulo = modulo;
     }
 
-    public String getMnome() {
+    /*public String getMnome() {
         return mnome;
     }
 
     public void setMnome(String mnome) {
         this.mnome = mnome;
-    }
+    }*/
 
     public boolean isVisualizar() {
         return visualizar;
@@ -96,7 +96,7 @@ public class Permissaomodulo {
 
     @Override
     public String toString() {
-        return "Permissaomodulo{" + "id=" + id + ", permissao=" + permissao + ", modulo=" + modulo + ", mnome=" + mnome + ", visualizar=" + visualizar + ", inserir=" + inserir + ", alterar=" + alterar + ", excluir=" + excluir + ", data=" + data + '}';
+        return "Permissaomodulo{" + "id=" + id + ", permissao=" + permissao + ", modulo=" + modulo + /*", mnome=" + mnome + */", visualizar=" + visualizar + ", inserir=" + inserir + ", alterar=" + alterar + ", excluir=" + excluir + ", data=" + data + '}';
     }
     
     

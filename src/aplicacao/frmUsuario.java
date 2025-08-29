@@ -56,8 +56,6 @@ public class frmUsuario extends frmGenericomodal {
     private int idUsuariosecao;
     private String nomeUsuariosecao;
     
-
-     
     PermissaoDAO permissaoDAO = DAOFactory.criarPermissaoDAO();
     ModuloDAO moduloDAO = DAOFactory.criarModuloDAO();
     PermissaomoduloDAO permissaomoduloDAO = DAOFactory.criarPermissaomoduloDAO();
@@ -231,6 +229,7 @@ public class frmUsuario extends frmGenericomodal {
         });
 
         lblNome.setBackground(new java.awt.Color(51, 51, 51));
+        lblNome.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         lblNome.setText("NOME*");
 
         txtUsuario.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -239,6 +238,7 @@ public class frmUsuario extends frmGenericomodal {
             }
         });
 
+        lblUsuario.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         lblUsuario.setText("USUARIO*");
 
         txtEmail.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -252,17 +252,21 @@ public class frmUsuario extends frmGenericomodal {
             }
         });
 
+        lblEmail.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         lblEmail.setText("EMAIL*");
 
+        lblFuncao.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         lblFuncao.setText("PERMISSÃO*");
 
+        lblCelular.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         lblCelular.setText("CELULAR*");
 
-        lblPesquisa.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        lblPesquisa.setText("Digite o nome:");
+        lblPesquisa.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        lblPesquisa.setText("Buscar Nome");
 
         txtBusca.setToolTipText("Digite o que deseja pesquisar...");
 
+        lblSenha.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         lblSenha.setText("SENHA*");
 
         try {
@@ -302,6 +306,13 @@ public class frmUsuario extends frmGenericomodal {
         panSuperiorLayout.setHorizontalGroup(
             panSuperiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panSuperiorLayout.createSequentialGroup()
+                .addGroup(panSuperiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 696, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(panSuperiorLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(lblPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(panSuperiorLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(panSuperiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panSuperiorLayout.createSequentialGroup()
@@ -332,24 +343,18 @@ public class frmUsuario extends frmGenericomodal {
                             .addComponent(ptxtSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(420, 420, 420))
                     .addGroup(panSuperiorLayout.createSequentialGroup()
-                        .addComponent(lblPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtBusca, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-            .addGroup(panSuperiorLayout.createSequentialGroup()
-                .addGap(299, 299, 299)
-                .addComponent(lblTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
         );
         panSuperiorLayout.setVerticalGroup(
             panSuperiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panSuperiorLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(lblTitulo)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(panSuperiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtBusca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblPesquisa))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblPesquisa)
+                .addGap(1, 1, 1)
+                .addComponent(txtBusca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(panSuperiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblNome)
@@ -358,14 +363,14 @@ public class frmUsuario extends frmGenericomodal {
                     .addComponent(lblFuncao)
                     .addComponent(lblCelular)
                     .addComponent(lblSenha))
-                .addGap(22, 22, 22)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(panSuperiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(ftxtCelular, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(ptxtSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cmbPermissao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cmbPermissao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 

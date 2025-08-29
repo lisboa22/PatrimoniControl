@@ -1,7 +1,0 @@
-0000000000000000000000000000000000000000 0ccde47c3c26952ee40cf8f05979a0f10f24b17a Robson Lisboa Santos <lisboa22@gmail.com> 1755222217 -0300	commit (initial): Ajuste no codigo alteração para timestamp e largura das colunas da tabela
-0ccde47c3c26952ee40cf8f05979a0f10f24b17a 0000000000000000000000000000000000000000 Robson Lisboa Santos <lisboa22@gmail.com> 1755222957 -0300	Branch: renamed refs/heads/master to refs/heads/main
-0000000000000000000000000000000000000000 0ccde47c3c26952ee40cf8f05979a0f10f24b17a Robson Lisboa Santos <lisboa22@gmail.com> 1755222957 -0300	Branch: renamed refs/heads/master to refs/heads/main
-0ccde47c3c26952ee40cf8f05979a0f10f24b17a 0518fe54a9873d279ad35b67ea94d56106e101ea Robson Lisboa Santos <lisboa22@gmail.com> 1755223504 -0300	pull origin main --rebase (start): checkout 0518fe54a9873d279ad35b67ea94d56106e101ea
-0518fe54a9873d279ad35b67ea94d56106e101ea 19cab1405ab885687432667f57cfa0bc1d507794 Robson Lisboa Santos <lisboa22@gmail.com> 1755223707 -0300	commit: Teste do git
-19cab1405ab885687432667f57cfa0bc1d507794 8f0dceeb15010e16fd64296cacd69f5865b44beb Robson Lisboa Santos <lisboa22@gmail.com> 1755268157 -0300	commit: Resolução de diversos problemas
-8f0dceeb15010e16fd64296cacd69f5865b44beb c3afcf1f7746f06596f00736efbba1c12821a6ab Robson Lisboa Santos <lisboa22@gmail.com> 1755268712 -0300	commit: Primeiro Commit

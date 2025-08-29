@@ -1,0 +1,26 @@
+class UnionFind:
+  def __init__(self, n):
+    self.parent = list(range(n)) # Cada elemento é seu próprio "pai"
+
+  def find(self, x):
+    if self.parent[x] != x:
+      self.parent[x] = self.find(self.parent[x]) # Compressão de caminho
+    return self.parent[x]
+
+  def union(self, x, y):
+    px, py = self.find(x), self.find(y)
+    if px != py:
+      self.parent[py] = px
+  def union_list(self, elementos):
+    if not elementos:
+        return
+    primeiro = elementos[0]
+    for elem in elementos[1:]:
+        self.union(primeiro, elem)
+
+# Exemplo de uso:
+uf = UnionFind(10)
+uf.union_list([1, 2, 5, 7])
+uf.union_list([3, 4, 8])
+print("Representante do conjunto de 5:", uf.find(7)) 
+print("Representante do conjunto de 8:", uf.find(8)) 

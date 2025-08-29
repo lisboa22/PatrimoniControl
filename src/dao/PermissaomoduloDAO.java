@@ -15,7 +15,7 @@ import java.sql.SQLException;
  */
 public interface PermissaomoduloDAO {
     public int inserir(Permissaomodulo permissaomodulo) throws ClassNotFoundException, SQLException, SQLIntegrityConstraintViolationException;
-    //public List<Permissaomodulo> listar();
+    public List<Permissaomodulo> listar();
     public List<Permissaomodulo> listarPorPermissao(int id);
     public int editar(Permissaomodulo permissaomodulo);
     //public int editarSenha(Permissaomodulo permissaomodulo);

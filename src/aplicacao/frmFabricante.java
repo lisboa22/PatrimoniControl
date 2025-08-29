@@ -169,6 +169,7 @@ public class frmFabricante extends frmGenericomodal {
         lblFabricante.setText("FABRICANTE*");
 
         lblTitulo.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        lblTitulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblTitulo.setText("FABRICANTE");
 
         lblPesquisa.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
@@ -193,10 +194,7 @@ public class frmFabricante extends frmGenericomodal {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtBusca)))
                 .addContainerGap())
-            .addGroup(panSuperiorLayout.createSequentialGroup()
-                .addGap(204, 204, 204)
-                .addComponent(lblTitulo)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(lblTitulo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         panSuperiorLayout.setVerticalGroup(
             panSuperiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
