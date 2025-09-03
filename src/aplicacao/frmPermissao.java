@@ -15,7 +15,9 @@ import java.text.SimpleDateFormat;
 import javax.swing.JOptionPane;
 import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.swing.table.TableRowSorter;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.RowFilter;
@@ -47,6 +49,7 @@ public class frmPermissao extends frmGenericomodal {
     private String tPermissao;
     private int idUsuariosecao;
     private String nomeUsuariosecao;
+    private int idPermissaosecao;
     
     UsuarioDAO usuarioDAO = DAOFactory.criarUsuarioDAO();
     LogDAO logDAO = DAOFactory.criarLogDAO();
@@ -58,6 +61,7 @@ public class frmPermissao extends frmGenericomodal {
     public frmPermissao(java.awt.Frame parent, boolean modal, int idUsuariosecao, int idPermissaosecao) {
         super(parent, modal);
         this.idUsuariosecao = idUsuariosecao;
+        this.idPermissaosecao = idPermissaosecao;
         initComponents();
         initEstiloGlobal();
         ((AbstractDocument) txtNome.getDocument()).setDocumentFilter(new UppercaseDocumentFilter());
@@ -121,6 +125,35 @@ public class frmPermissao extends frmGenericomodal {
         }
     }
 
+    private void setarPermissao(){
+        // Pegue a lista de permissões
+        List<Permissaomodulo> permissaomodulos = permissaomoduloDAO.listarPorPermissao(idPermissaosecao); 
+
+        // 2. Crie um mapa para armazenar as permissões consolidadas por módulo
+        // A chave é o nome do módulo e o valor é o objeto Permissaomodulo
+        Map<String, Permissaomodulo> permissoesPorModulo = new HashMap<>();
+
+        // 3. Itere sobre a lista e preencha o mapa
+        for (Permissaomodulo pm : permissaomodulos) {
+            permissoesPorModulo.put(pm.getModulo().getNome(), pm);
+        }
+
+        // 4. Inicialize todos os botões como desabilitados para uma base limpa
+        // Esta é a parte mais importante para evitar erros de estado.
+        btnInserir.setEnabled(false);
+        btnEditar.setEnabled(false);
+        btnApagar.setEnabled(false);
+                
+        // 5. Verifique as permissões para o módulo "USUÁRIO" e habilite os botões
+        Permissaomodulo permissaoUsuario = permissoesPorModulo.get("PERMISSÃO");
+        if (permissaoUsuario != null) {
+            btnInserir.setEnabled(permissaoUsuario.isInserir());
+            btnEditar.setEnabled(permissaoUsuario.isAlterar());
+            btnApagar.setEnabled(permissaoUsuario.isExcluir());
+        }             
+            
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -371,6 +404,7 @@ public class frmPermissao extends frmGenericomodal {
      * Atualiza a tabela de usuários e aplica filtro de busca.
      */
     private void formWindowGainedFocus(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowGainedFocus
+        setarPermissao();
         preencherTabela();
         TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(modelo);
         tblPermissao.setRowSorter(sorter);

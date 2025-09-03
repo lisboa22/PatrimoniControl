@@ -17,8 +17,10 @@ public interface PermissaomoduloDAO {
     public int inserir(Permissaomodulo permissaomodulo) throws ClassNotFoundException, SQLException, SQLIntegrityConstraintViolationException;
     public List<Permissaomodulo> listar();
     public List<Permissaomodulo> listarPorPermissao(int id);
+    public List<Permissaomodulo> listarPorModulo(int id_permissao, int id_modulo);
     public int editar(Permissaomodulo permissaomodulo);
     //public int editarSenha(Permissaomodulo permissaomodulo);
     public int apagar(int id) throws ClassNotFoundException, SQLException, SQLIntegrityConstraintViolationException;
+    public int apagarModulo(int id) throws ClassNotFoundException, SQLException, SQLIntegrityConstraintViolationException;
     
 }

@@ -17,22 +17,17 @@
             <file>file:/C:/Users/robson.SRVLISBOAINFO/Desktop/ProjPOO/PatrimonioControl/PatrimonioControl/src/aplicacao/frmModulo.java</file>
             <file>file:/C:/Users/robson.SRVLISBOAINFO/Desktop/ProjPOO/PatrimonioControl/PatrimonioControl/src/aplicacao/frmFabricante.java</file>
             <file>file:/C:/Users/robson.SRVLISBOAINFO/Desktop/ProjPOO/PatrimonioControl/PatrimonioControl/src/aplicacao/frmEquipamento.java</file>
-            <file>file:/C:/Users/robson.SRVLISBOAINFO/Desktop/ProjPOO/PatrimonioControl/PatrimonioControl/src/aplicacao/frmConfiguracao.java</file>
             <file>file:/C:/Users/robson.SRVLISBOAINFO/Desktop/ProjPOO/PatrimonioControl/PatrimonioControl/src/aplicacao/frmPrincipal.java</file>
-            <file>file:/C:/Users/robson.SRVLISBOAINFO/Desktop/ProjPOO/PatrimonioControl/PatrimonioControl/src/modelo/Log.java</file>
-            <file>file:/C:/Users/robson.SRVLISBOAINFO/Desktop/ProjPOO/PatrimonioControl/PatrimonioControl/src/aplicacao/frmLogin.java</file>
-            <file>file:/C:/Users/robson.SRVLISBOAINFO/Desktop/ProjPOO/PatrimonioControl/PatrimonioControl/src/aplicacao/frmGenerico.java</file>
-            <file>file:/C:/Users/robson.SRVLISBOAINFO/Desktop/ProjPOO/PatrimonioControl/PatrimonioControl/src/aplicacao/frmAbertura.java</file>
-            <file>file:/C:/Users/robson.SRVLISBOAINFO/Desktop/ProjPOO/PatrimonioControl/PatrimonioControl/src/aplicacao/Validadores.java</file>
-            <file>file:/C:/Users/robson.SRVLISBOAINFO/Desktop/ProjPOO/PatrimonioControl/PatrimonioControl/src/aplicacao/RoundedBorder.java</file>
-            <file>file:/C:/Users/robson.SRVLISBOAINFO/Desktop/ProjPOO/PatrimonioControl/PatrimonioControl/src/controller/RelatoriosController.java</file>
-            <file>file:/C:/Users/robson.SRVLISBOAINFO/Desktop/ProjPOO/PatrimonioControl/PatrimonioControl/src/dao/DAOGenerico.java</file>
-            <file>file:/C:/Users/robson.SRVLISBOAINFO/Desktop/ProjPOO/PatrimonioControl/PatrimonioControl/src/dao/EquipamentoDAOJDBC.java</file>
-            <file>file:/C:/Users/robson.SRVLISBOAINFO/Desktop/ProjPOO/PatrimonioControl/PatrimonioControl/src/dao/DAOFactory.java</file>
-            <file>file:/C:/Users/robson.SRVLISBOAINFO/Desktop/ProjPOO/PatrimonioControl/PatrimonioControl/src/dao/PermissaomoduloDAO.java</file>
             <file>file:/C:/Users/robson.SRVLISBOAINFO/Desktop/ProjPOO/PatrimonioControl/PatrimonioControl/src/dao/PermissaomoduloDAOJDBC.java</file>
             <file>file:/C:/Users/robson.SRVLISBOAINFO/Desktop/ProjPOO/PatrimonioControl/PatrimonioControl/src/modelo/Permissaomodulo.java</file>
             <file>file:/C:/Users/robson.SRVLISBOAINFO/Desktop/ProjPOO/PatrimonioControl/PatrimonioControl/src/dao/PermissaoDAOJDBC.java</file>
+            <file>file:/C:/Users/robson.SRVLISBOAINFO/Desktop/ProjPOO/PatrimonioControl/PatrimonioControl/src/aplicacao/frmLogin.java</file>
+            <file>file:/C:/Users/robson.SRVLISBOAINFO/Desktop/ProjPOO/PatrimonioControl/PatrimonioControl/src/dao/ModuloDAOJDBC.java</file>
+            <file>file:/C:/Users/robson.SRVLISBOAINFO/Desktop/ProjPOO/PatrimonioControl/PatrimonioControl/src/aplicacao/frmConfiguracao.java</file>
+            <file>file:/C:/Users/robson.SRVLISBOAINFO/Desktop/ProjPOO/PatrimonioControl/PatrimonioControl/src/dao/PermissaomoduloDAO.java</file>
+            <file>file:/C:/Users/robson.SRVLISBOAINFO/Desktop/ProjPOO/PatrimonioControl/PatrimonioControl/src/modelo/Usuario.java</file>
+            <file>file:/C:/Users/robson.SRVLISBOAINFO/Desktop/ProjPOO/PatrimonioControl/PatrimonioControl/src/modelo/Permissao.java</file>
+            <file>file:/C:/Users/robson.SRVLISBOAINFO/Desktop/ProjPOO/PatrimonioControl/PatrimonioControl/src/dao/PermissaoDAO.java</file>
         </group>
     </open-files>
 </project-private>

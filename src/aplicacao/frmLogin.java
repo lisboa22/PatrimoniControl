@@ -6,6 +6,7 @@ package aplicacao;
 
 //import aplicacao.Seguranca;
 import dao.DAOFactory;
+import dao.PermissaoDAO;
 import dao.UsuarioDAO;
 import dao.PermissaomoduloDAO;
 import java.awt.event.KeyEvent;
@@ -13,6 +14,7 @@ import java.util.List;
 import javax.swing.JOptionPane;
 //import javax.swing.SwingUtilities;
 import javax.swing.text.AbstractDocument;
+import modelo.Permissao;
 import modelo.Permissaomodulo;
 import modelo.Usuario;
 
@@ -23,7 +25,7 @@ import modelo.Usuario;
 public class frmLogin extends frmGenerico {
     //private final String PATH_ICON="/recurso/estoque-pronto.png";
     private int idUsuario;
-    private boolean novaSenha = false;
+    //private boolean novaSenha = false;
     private String usuario;
     private int alterSenha;
     private boolean usuarioEncontrado = false;
@@ -33,9 +35,10 @@ public class frmLogin extends frmGenerico {
     private int idUsuariosecao;
     
     UsuarioDAO usuarioDAO = DAOFactory.criarUsuarioDAO();
+    //PermissaoDAO permissaoDAO = DAOFactory.criarPermissaoDAO();
     
-    public int getId() {return idUsuariosecao;}
-    public int getPermissao() {return permissao;}
+    //public int getId() {return idUsuariosecao;}
+    //public int getPermissao() {return permissao;}
     /**
      * Creates new form frmLogin
      */
@@ -275,6 +278,7 @@ public class frmLogin extends frmGenerico {
         }
        
         for (Usuario u : usuarios) {
+            
             if (u.getUsuario().equalsIgnoreCase(txtUsuario.getText())) {
                 idUsuario = u.getId();
                 usuario = u.getUsuario();
@@ -282,7 +286,8 @@ public class frmLogin extends frmGenerico {
                 alterSenha = u.getAltersenha();
                 usuarioEncontrado = true;
                 idUsuariosecao = u.getId();
-                permissao = u.getPermissao().getId();
+                Usuario usuario = usuarioDAO.listar(idUsuario); 
+                permissao = usuario.getPermissao().getId();  
                 break;
             }
         }

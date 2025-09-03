@@ -67,15 +67,20 @@ public class PermissaomoduloDAOJDBC implements PermissaomoduloDAO{
         try {        
             rset = DAOGenerico.executarConsulta(select);
             while (rset.next()) {
+                Modulo modulo = new Modulo();
+                modulo.setId(rset.getInt("id_modulo"));
+                modulo.setNome(rset.getString("nome_modulo"));
+                
                 Permissaomodulo pm = new Permissaomodulo();
                 //permissaomodulo. setUid(rset.getInt("uid"));
                 //permissaomodulo.setId_permissao(rset.getInt("id_permissao"));
-                //permissaomodulo.setMnome(rset.getString("m.nome"));
+                pm.setModulo(modulo);
                 pm.setInserir(rset.getBoolean("inserir"));
                 pm.setAlterar(rset.getBoolean("alterar"));
                 pm.setExcluir(rset.getBoolean("excluir"));
                 pm.setVisualizar(rset.getBoolean("visualizar"));
                 permissaomodulos.add(pm);
+                
                 
             }
           
@@ -119,6 +124,51 @@ public class PermissaomoduloDAOJDBC implements PermissaomoduloDAO{
                 pm.setVisualizar(rset.getBoolean("visualizar"));
 
                 permissaomodulos.add(pm);
+               
+            }
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+        } 
+        return permissaomodulos;
+    }
+    
+    
+    //Listar um único Usuário.
+    @Override
+    public List<Permissaomodulo> listarPorModulo(int id_permissao, int id_modulo) {
+        
+        List<Permissaomodulo> permissaomodulos = new ArrayList<>();
+        
+        ResultSet rset;
+        String select = "SELECT pm.*, m.nome AS nome_modulo "
+                      + "FROM permissaomodulo pm JOIN modulo m ON pm.id_modulo = m.id "
+                      + "WHERE pm.id_permissao = ? and pm.id_modulo = ?;";
+         
+        Permissaomodulo permissaomodulo = new Permissaomodulo();
+        try {        
+            rset = DAOGenerico.executarConsulta(select, id_permissao, id_modulo);
+            
+            while (rset.next()) {
+                
+                Modulo modulo = new Modulo();
+                modulo.setId(rset.getInt("id_modulo"));
+                modulo.setNome(rset.getString("nome_modulo"));
+
+                Permissao permissao = new Permissao();
+                permissao.setId(rset.getInt("id"));
+                
+                Permissaomodulo pm = new Permissaomodulo();
+                pm.setId(rset.getInt("id"));
+                pm.setModulo(modulo);
+                pm.setPermissao(permissao);
+                pm.setInserir(rset.getBoolean("inserir"));
+                pm.setAlterar(rset.getBoolean("alterar"));
+                pm.setExcluir(rset.getBoolean("excluir"));
+                pm.setVisualizar(rset.getBoolean("visualizar"));
+
+                permissaomodulos.add(pm);
+               
             }
             
         } catch (Exception e) {
@@ -185,6 +235,18 @@ public class PermissaomoduloDAOJDBC implements PermissaomoduloDAO{
         sqlBuilder
                 .append("DELETE FROM permissaomodulo ")
                 .append("WHERE id_permissao = ?");
+        String delete = sqlBuilder.toString();
+        int linha = 0;        
+        linha = DAOGenerico.executarComando(delete, id);
+        return linha;
+    }
+    
+    @Override
+    public int apagarModulo(int id) throws ClassNotFoundException, SQLException, SQLIntegrityConstraintViolationException {
+        StringBuilder sqlBuilder = new StringBuilder();
+        sqlBuilder
+                .append("DELETE FROM permissaomodulo ")
+                .append("WHERE id_modulo = ?");
         String delete = sqlBuilder.toString();
         int linha = 0;        
         linha = DAOGenerico.executarComando(delete, id);

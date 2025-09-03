@@ -144,16 +144,25 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="INSERIR"/>
           </Properties>
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="chkInserirMouseClicked"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JCheckBox" name="chkAlterar">
           <Properties>
             <Property name="text" type="java.lang.String" value="ALTERAR"/>
           </Properties>
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="chkAlterarMouseClicked"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JCheckBox" name="chkExcluir">
           <Properties>
             <Property name="text" type="java.lang.String" value="EXCLUIR"/>
           </Properties>
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="chkExcluirMouseClicked"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JCheckBox" name="chkVisualizar">
           <Properties>

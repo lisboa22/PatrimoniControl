@@ -21,6 +21,8 @@ import modelo.Permissaomodulo;
 import dao.PermissaomoduloDAO;
 import dao.UsuarioDAO;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import modelo.Log;
 import modelo.Usuario;
 
@@ -39,6 +41,7 @@ public class frmConfiguracao extends frmGenericomodal {
     private int tIdmodulo;
     private int idUsuariosecao;
     private String nomeUsuariosecao;
+    private int idPermissaosecao;
     
     UsuarioDAO usuarioDAO = DAOFactory.criarUsuarioDAO();
     LogDAO logDAO = DAOFactory.criarLogDAO();
@@ -55,12 +58,13 @@ public class frmConfiguracao extends frmGenericomodal {
     public frmConfiguracao(java.awt.Frame parent, boolean modal, int idUsuariosecao, int idPermissaosecao) {
         super(parent, modal);
         this.idUsuariosecao = idUsuariosecao;
+        this.idPermissaosecao = idPermissaosecao;
         initComponents();
         initEstiloGlobal();
         //radModulo.setVisible(false);
          
         // Aplica o filtro de maiúsculas ao JTextField      
-        ((AbstractDocument) txtModulo.getDocument()).setDocumentFilter(new UppercaseDocumentFilter());
+        //((AbstractDocument) txtModulo.getDocument()).setDocumentFilter(new UppercaseDocumentFilter());
 
         // Define um modelo de tabela que não permite edição de células
         modelo = new DefaultTableModel(
@@ -109,6 +113,14 @@ public class frmConfiguracao extends frmGenericomodal {
                 tIdpermissao = primeiroElemento.getId();
             }
         }
+        
+        /*//Limpa combobox
+        jComboBox1.removeAllItems();
+        
+        for (Permissao p : permissoes) {
+            String permissao = p.getNome();
+            jComboBox1.addItem(permissao);
+        }*/
     }
 
     /**
@@ -123,11 +135,12 @@ public class frmConfiguracao extends frmGenericomodal {
         tblModulo.getColumnModel().getColumn(0).setPreferredWidth(50);
         try {
             List<Permissaomodulo> permissaomodulos = permissaomoduloDAO.listarPorPermissao(tIdpermissao);
-            
+    
             List<Modulo> modulos = moduloDAO.listar();
-            
+            int idPerm=-1;
             for (Modulo m : modulos) {
-                int idPerm = m.getId()-1;
+                idPerm = idPerm+1;
+         
                 modelo.addRow(new Object[]{//permissaomodulo.getId(),
                                             permissaomodulos.get(idPerm).getModulo().getNome(),
                                             permissaomodulos.get(idPerm).isInserir(),
@@ -144,6 +157,31 @@ public class frmConfiguracao extends frmGenericomodal {
         }
     }
 
+    private void setarPermissao(){
+        // Pegue a lista de permissões
+        List<Permissaomodulo> permissaomodulos = permissaomoduloDAO.listarPorPermissao(idPermissaosecao); 
+
+        // 2. Crie um mapa para armazenar as permissões consolidadas por módulo
+        // A chave é o nome do módulo e o valor é o objeto Permissaomodulo
+        Map<String, Permissaomodulo> permissoesPorModulo = new HashMap<>();
+
+        // 3. Itere sobre a lista e preencha o mapa
+        for (Permissaomodulo pm : permissaomodulos) {
+            permissoesPorModulo.put(pm.getModulo().getNome(), pm);
+        }
+
+        // 4. Inicialize todos os botões como desabilitados para uma base limpa
+        // Esta é a parte mais importante para evitar erros de estado.
+        btnEditar.setEnabled(false);
+                
+        // 5. Verifique as permissões para o módulo "USUÁRIO" e habilite os botões
+        Permissaomodulo permissaoUsuario = permissoesPorModulo.get("CONFIGURAÇÃO");
+        if (permissaoUsuario != null) {
+            btnEditar.setEnabled(permissaoUsuario.isAlterar());
+        }             
+            
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -199,10 +237,25 @@ public class frmConfiguracao extends frmGenericomodal {
         lblTitulo.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
         chkInserir.setText("INSERIR");
+        chkInserir.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                chkInserirMouseClicked(evt);
+            }
+        });
 
         chkAlterar.setText("ALTERAR");
+        chkAlterar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                chkAlterarMouseClicked(evt);
+            }
+        });
 
         chkExcluir.setText("EXCLUIR");
+        chkExcluir.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                chkExcluirMouseClicked(evt);
+            }
+        });
 
         chkVisualizar.setText("VISUALIZAR");
 
@@ -540,6 +593,36 @@ public class frmConfiguracao extends frmGenericomodal {
         limparCampos();
         preencherTabela();
     }//GEN-LAST:event_cmbPermissaoActionPerformed
+
+    private void chkAlterarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_chkAlterarMouseClicked
+        if (chkAlterar.isSelected()){
+            chkVisualizar.setSelected(true);
+        } else {
+            if (!chkInserir.isSelected() && !chkExcluir.isSelected()){
+                chkVisualizar.setSelected(false);
+            }
+        }
+    }//GEN-LAST:event_chkAlterarMouseClicked
+
+    private void chkInserirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_chkInserirMouseClicked
+        if (chkInserir.isSelected()){
+            chkVisualizar.setSelected(true);
+        } else {
+            if (!chkAlterar.isSelected() && !chkExcluir.isSelected()){
+                chkVisualizar.setSelected(false);
+            }
+        }
+    }//GEN-LAST:event_chkInserirMouseClicked
+
+    private void chkExcluirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_chkExcluirMouseClicked
+        if (chkExcluir.isSelected()){
+            chkVisualizar.setSelected(true);
+        } else {
+            if (!chkAlterar.isSelected() && !chkInserir.isSelected()){
+                chkVisualizar.setSelected(false);
+            }
+        }
+    }//GEN-LAST:event_chkExcluirMouseClicked
    
     //Limpa os campos da tabela e reseta combobox.
     private void limparCampos(){

@@ -19,7 +19,9 @@ import java.text.SimpleDateFormat;
 import javax.swing.JOptionPane;
 import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.swing.table.TableRowSorter;
@@ -31,6 +33,7 @@ import javax.swing.text.AbstractDocument;
 import modelo.Modulo;
 import modelo.Permissao;
 import modelo.Log;
+import modelo.Permissaomodulo;
 
 
 /**
@@ -48,7 +51,7 @@ public class frmUsuario extends frmGenericomodal {
     private String tUsuario;
     private String tEmail;
     private String tCelular;
-    private int tidPermissao;
+    private int idPermissaosecao;
     private String tSenha;
     private int idPermissao;
     private String bPermissao;
@@ -73,6 +76,7 @@ public class frmUsuario extends frmGenericomodal {
     public frmUsuario(java.awt.Frame parent, boolean modal, int idUsuariosecao, int idPermissaosecao) {
         super(parent, modal);
         this.idUsuariosecao = idUsuariosecao;
+        this.idPermissaosecao = idPermissaosecao;
         initComponents();
         initEstiloGlobal();
         // Aplica o filtro de maiúsculas ao JTextField      
@@ -167,6 +171,35 @@ public class frmUsuario extends frmGenericomodal {
         }
     }
     
+    
+    private void setarPermissao(){
+        // Pegue a lista de permissões
+        List<Permissaomodulo> permissaomodulos = permissaomoduloDAO.listarPorPermissao(idPermissaosecao); 
+
+        // 2. Crie um mapa para armazenar as permissões consolidadas por módulo
+        // A chave é o nome do módulo e o valor é o objeto Permissaomodulo
+        Map<String, Permissaomodulo> permissoesPorModulo = new HashMap<>();
+
+        // 3. Itere sobre a lista e preencha o mapa
+        for (Permissaomodulo pm : permissaomodulos) {
+            permissoesPorModulo.put(pm.getModulo().getNome(), pm);
+        }
+
+        // 4. Inicialize todos os botões como desabilitados para uma base limpa
+        // Esta é a parte mais importante para evitar erros de estado.
+        btnInserir.setEnabled(false);
+        btnEditar.setEnabled(false);
+        btnApagar.setEnabled(false);
+                
+        // 5. Verifique as permissões para o módulo "USUÁRIO" e habilite os botões
+        Permissaomodulo permissaoUsuario = permissoesPorModulo.get("USUÁRIO");
+        if (permissaoUsuario != null) {
+            btnInserir.setEnabled(permissaoUsuario.isInserir());
+            btnEditar.setEnabled(permissaoUsuario.isAlterar());
+            btnApagar.setEnabled(permissaoUsuario.isExcluir());
+        }             
+            
+    }
    
 
     /**
@@ -364,13 +397,14 @@ public class frmUsuario extends frmGenericomodal {
                     .addComponent(lblCelular)
                     .addComponent(lblSenha))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(panSuperiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(ftxtCelular, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(ptxtSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cmbPermissao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(panSuperiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(panSuperiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(txtUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(ftxtCelular, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(ptxtSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(cmbPermissao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
 
@@ -528,11 +562,13 @@ public class frmUsuario extends frmGenericomodal {
         this.dispose();
     }//GEN-LAST:event_btnVoltarActionPerformed
 
+    
     /**
      * Evento disparado quando a janela ganha foco.
      * Atualiza a tabela de usuários e aplica filtro de busca.
      */
     private void formWindowGainedFocus(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowGainedFocus
+        setarPermissao();
         preencherTabela();
         TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(modelo);
         tblUsuario.setRowSorter(sorter);
