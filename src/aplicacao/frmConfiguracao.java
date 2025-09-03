@@ -20,9 +20,11 @@ import modelo.Modulo;
 import modelo.Permissaomodulo;
 import dao.PermissaomoduloDAO;
 import dao.UsuarioDAO;
+import java.awt.Frame;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import javax.swing.SwingUtilities;
 import modelo.Log;
 import modelo.Usuario;
 
@@ -207,6 +209,7 @@ public class frmConfiguracao extends frmGenericomodal {
         btnEditar = new javax.swing.JButton();
         btnVoltar = new javax.swing.JButton();
         btnLimpar = new javax.swing.JButton();
+        btnLog = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("EstoqControl - Usuários");
@@ -384,6 +387,17 @@ public class frmConfiguracao extends frmGenericomodal {
             }
         });
 
+        btnLog.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnLog.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recurso/formato-de-arquivo-log.png"))); // NOI18N
+        btnLog.setText("Log");
+        btnLog.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnLog.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnLog.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLogActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout panInferiorLayout = new javax.swing.GroupLayout(panInferior);
         panInferior.setLayout(panInferiorLayout);
         panInferiorLayout.setHorizontalGroup(
@@ -391,7 +405,9 @@ public class frmConfiguracao extends frmGenericomodal {
             .addGroup(panInferiorLayout.createSequentialGroup()
                 .addGroup(panInferiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panInferiorLayout.createSequentialGroup()
-                        .addGap(234, 234, 234)
+                        .addGap(126, 126, 126)
+                        .addComponent(btnLog, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnLimpar, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -410,7 +426,8 @@ public class frmConfiguracao extends frmGenericomodal {
                 .addGroup(panInferiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(btnEditar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnLimpar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnVoltar, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(btnVoltar, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnLog, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -623,6 +640,18 @@ public class frmConfiguracao extends frmGenericomodal {
             }
         }
     }//GEN-LAST:event_chkExcluirMouseClicked
+
+    private void btnLogActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogActionPerformed
+       // Obtém a referência da janela pai, que é o frame atual.
+        Frame parentFrame = (Frame) SwingUtilities.getWindowAncestor(this);
+
+        // Instancia o frmLog, passando o frame pai e 'true' para torná-lo modal.
+        frmLog log = new frmLog(parentFrame, true);
+
+        // Exibe a nova janela modal.
+        log.setVisible(true);
+        //new frmLog().setVisible(true);
+    }//GEN-LAST:event_btnLogActionPerformed
    
     //Limpa os campos da tabela e reseta combobox.
     private void limparCampos(){
@@ -675,6 +704,7 @@ public class frmConfiguracao extends frmGenericomodal {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnEditar;
     private javax.swing.JButton btnLimpar;
+    private javax.swing.JButton btnLog;
     private javax.swing.JButton btnVoltar;
     private javax.swing.JCheckBox chkAlterar;
     private javax.swing.JCheckBox chkExcluir;
