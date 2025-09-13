@@ -157,18 +157,11 @@ public class frmMovimentacao extends frmGenericomodal {
             cmbDestino.setModel(comboModelDestino);
             cmbUsuarioliberacao.setModel(comboModelOUsuarioliberacao);
             cmbUsuariorecepcao.setModel(comboModelUsuariorecepcao);
-            /*cbDesafiante.setModel(comboModelDesafiante);
-            Lutador desafiado = (Lutador) cbDesafiado.getSelectedItem();
-            lblCategoriaDesafiado.setText("Categoria: " + desafiado.getCategoria());
-            Lutador desafiante = (Lutador) cbDesafiante.getSelectedItem();
-            lblCategoriaDesafiante.setText("Categoria: " + desafiante.getCategoria());*/
+            
         } catch (Exception ex) {
             ex.printStackTrace();
             JOptionPane.showMessageDialog(this, "Erro ao carregar a lista de Lutadores");
         }
-
-        // Pegue a lista de permissões
-        //List<Permissao> permissoes = permissaoDAO.listar();
         
     }
 
@@ -277,7 +270,7 @@ public class frmMovimentacao extends frmGenericomodal {
         btnLimpar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("EstoqControl - Usuários");
+        setTitle("Patrim - Movimentações");
         setResizable(false);
         addWindowFocusListener(new java.awt.event.WindowFocusListener() {
             public void windowGainedFocus(java.awt.event.WindowEvent evt) {
@@ -290,14 +283,12 @@ public class frmMovimentacao extends frmGenericomodal {
             public void windowClosed(java.awt.event.WindowEvent evt) {
                 formWindowClosed(evt);
             }
-            public void windowClosing(java.awt.event.WindowEvent evt) {
-                formWindowClosing(evt);
-            }
         });
 
         panSuperior.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
         lblEquipamento.setBackground(new java.awt.Color(51, 51, 51));
+        lblEquipamento.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         lblEquipamento.setText("EQUIPAMENTO*");
 
         txtNumserie.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -305,47 +296,37 @@ public class frmMovimentacao extends frmGenericomodal {
                 txtNumserieMouseClicked(evt);
             }
         });
-        txtNumserie.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                txtNumserieKeyPressed(evt);
-            }
-        });
 
+        lblNumserie.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         lblNumserie.setText("NÚMERO DE SÉRIE");
 
+        lblTipomovimentacao.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         lblTipomovimentacao.setText("MOVIMENTACAO*");
 
+        lblUsuarioliberacao.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         lblUsuarioliberacao.setText("LIBERAÇÃO");
 
+        lblOrigem.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         lblOrigem.setText("ORIGEM*");
 
         lblTitulo.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         lblTitulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblTitulo.setText("MOVIMENTAÇÃO");
 
-        lblPesquisa.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        lblPesquisa.setText("Digite o nome:");
+        lblPesquisa.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        lblPesquisa.setText("Buscar Nome:");
 
         txtBusca.setToolTipText("Digite o que deseja pesquisar...");
 
+        lblDestino.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         lblDestino.setText("DESTINO");
-
-        cmbUsuarioliberacao.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                cmbUsuarioliberacaoKeyPressed(evt);
-            }
-        });
 
         cmbTipomovimentacao.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ENTRADA", "SAÍDA", "MANUTENÇÃO", "INSTALAÇÃO", "REMOÇÃO" }));
 
+        lblUsuariorecepcao.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         lblUsuariorecepcao.setText("RECEPÇÃO");
 
-        cmbUsuariorecepcao.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                cmbUsuariorecepcaoKeyPressed(evt);
-            }
-        });
-
+        lblObservacao.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         lblObservacao.setText("OBSERVAÇÃO");
 
         txtObservacao.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -359,13 +340,15 @@ public class frmMovimentacao extends frmGenericomodal {
         panSuperiorLayout.setHorizontalGroup(
             panSuperiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panSuperiorLayout.createSequentialGroup()
+                .addGroup(panSuperiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 1028, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(panSuperiorLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(lblPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(panSuperiorLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(panSuperiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(panSuperiorLayout.createSequentialGroup()
-                        .addComponent(lblPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtBusca, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(panSuperiorLayout.createSequentialGroup()
                         .addGroup(panSuperiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lblEquipamento, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -376,8 +359,8 @@ public class frmMovimentacao extends frmGenericomodal {
                             .addComponent(txtNumserie, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(panSuperiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblTipomovimentacao, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(cmbTipomovimentacao, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(cmbTipomovimentacao, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblTipomovimentacao))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(panSuperiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lblOrigem, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -398,48 +381,47 @@ public class frmMovimentacao extends frmGenericomodal {
                         .addGroup(panSuperiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lblObservacao, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txtObservacao, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(171, 171, 171))))
-            .addGroup(panSuperiorLayout.createSequentialGroup()
-                .addComponent(lblTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 1028, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                        .addGap(171, 171, 171))
+                    .addGroup(panSuperiorLayout.createSequentialGroup()
+                        .addComponent(txtBusca, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         panSuperiorLayout.setVerticalGroup(
             panSuperiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panSuperiorLayout.createSequentialGroup()
                 .addComponent(lblTitulo)
-                .addGap(11, 11, 11)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblPesquisa)
+                .addGap(3, 3, 3)
+                .addComponent(txtBusca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(panSuperiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(panSuperiorLayout.createSequentialGroup()
                         .addComponent(lblObservacao)
                         .addGap(28, 28, 28))
-                    .addGroup(panSuperiorLayout.createSequentialGroup()
-                        .addGroup(panSuperiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtBusca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblPesquisa))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(panSuperiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(panSuperiorLayout.createSequentialGroup()
-                                .addGroup(panSuperiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(lblEquipamento)
-                                    .addComponent(lblNumserie)
-                                    .addComponent(lblTipomovimentacao)
-                                    .addComponent(lblUsuarioliberacao)
-                                    .addComponent(lblOrigem)
-                                    .addComponent(lblDestino))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(panSuperiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(txtNumserie, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(cmbUsuarioliberacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(cmbEquipamento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(cmbTipomovimentacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(cmbOrigem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(cmbDestino, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(panSuperiorLayout.createSequentialGroup()
-                                .addComponent(lblUsuariorecepcao)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(panSuperiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(cmbUsuariorecepcao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtObservacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                    .addGroup(panSuperiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(panSuperiorLayout.createSequentialGroup()
+                            .addGroup(panSuperiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(lblEquipamento)
+                                .addComponent(lblNumserie)
+                                .addComponent(lblTipomovimentacao)
+                                .addComponent(lblUsuarioliberacao)
+                                .addComponent(lblOrigem)
+                                .addComponent(lblDestino))
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addGroup(panSuperiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(txtNumserie, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(cmbUsuarioliberacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(cmbEquipamento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(cmbTipomovimentacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(cmbOrigem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(cmbDestino, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(panSuperiorLayout.createSequentialGroup()
+                            .addComponent(lblUsuariorecepcao)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addGroup(panSuperiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(cmbUsuariorecepcao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(txtObservacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addContainerGap())
         );
 
@@ -491,11 +473,6 @@ public class frmMovimentacao extends frmGenericomodal {
         btnEditar.setText("Editar");
         btnEditar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btnEditar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        btnEditar.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                btnEditarFocusGained(evt);
-            }
-        });
         btnEditar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnEditarActionPerformed(evt);
@@ -641,8 +618,7 @@ public class frmMovimentacao extends frmGenericomodal {
      * Oculta a janela atual.
      */
     private void btnInserirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInserirActionPerformed
-       // float numero = 0;
-        
+     
         //Verifica se há campo vazio.
         if (txtNumserie.getText().isEmpty()) {
             JOptionPane.showMessageDialog(this, "Informe o numero de série.");
@@ -806,10 +782,6 @@ public class frmMovimentacao extends frmGenericomodal {
             Recepcao = tblMovimentacao.getValueAt(linhaSelecionada, 7).toString();
             Observacao = tblMovimentacao.getValueAt(linhaSelecionada, 8).toString();
         }
-        
-        
-        //Object obEquip = tblMovimentacao.getValueAt(linhaSelecionada, 1);
-        //String Equip = obEquip.toString();
    
         for (int i = 0;i < cmbEquipamento.getItemCount(); i++) {
             Object item = cmbEquipamento.getItemAt(i);
@@ -946,8 +918,6 @@ public class frmMovimentacao extends frmGenericomodal {
                     break; // achou, pode parar
                 }
             }
-            
-            //movimentacao.setData_hora(new Date());
             
             Equipamento equipamento = new Equipamento();
             equipamento.setId(idEquipamento);
@@ -1096,27 +1066,6 @@ public class frmMovimentacao extends frmGenericomodal {
     private void btnLimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimparActionPerformed
         limparCampos();
     }//GEN-LAST:event_btnLimparActionPerformed
-
-    private void txtNumserieKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNumserieKeyPressed
-      
-    }//GEN-LAST:event_txtNumserieKeyPressed
-
-    private void btnEditarFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_btnEditarFocusGained
-        //if (!txtNome.getText().isEmpty())
-            //restaurarSelecaoTabela(linhaSelecionada);
-    }//GEN-LAST:event_btnEditarFocusGained
-
-    private void cmbUsuarioliberacaoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cmbUsuarioliberacaoKeyPressed
-       
-    }//GEN-LAST:event_cmbUsuarioliberacaoKeyPressed
-
-    private void cmbUsuariorecepcaoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cmbUsuariorecepcaoKeyPressed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cmbUsuariorecepcaoKeyPressed
-
-    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-       // TODO add your handling code here:
-    }//GEN-LAST:event_formWindowClosing
 
     private void txtNumserieMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtNumserieMouseClicked
         txtNumserie.selectAll();        // TODO add your handling code here:

@@ -88,7 +88,7 @@ public class frmLogin extends frmGenerico {
         jLabel1.setText("jLabel1");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("EstoqControl - Login");
+        setTitle("Patrim - Login");
         setResizable(false);
 
         jPanel2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
@@ -251,34 +251,44 @@ public class frmLogin extends frmGenerico {
         }
     }//GEN-LAST:event_txtSenhaKeyPressed
 
-    private void logar(){
-        
-        // Pegue a lista de permissões
-        List<Usuario> usuarios = usuarioDAO.listar();  
-        
-        if (usuarioEncontrado){
-            if (!txtUsuario.getText().equalsIgnoreCase(usuario)) {
-                JOptionPane.showMessageDialog(this, "Usuario foi alterado. Digite o Usuário novamente.");
-                txtUsuario.setText("");
-                txtUsuario.requestFocus();
-                return;
-            }
-        }
+private void logar(){
     
-        //Verifica se há campo vazio.
-        if (txtUsuario.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Digite o usuário.");
-            txtUsuario.requestFocus();
-            return;
-        }
-        if (txtSenha.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Digite a senha.");
-            txtSenha.requestFocus();
-            return;
-        }
-       
+    // Validações iniciais - campos obrigatórios
+    if (txtUsuario.getText().isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Digite o usuário.");
+        txtUsuario.requestFocus();
+        return;
+    }
+    
+    if (txtSenha.getText().isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Digite a senha.");
+        txtSenha.requestFocus();
+        return;
+    }
+    
+    // Se estiver na tela de alteração de senha, validar confirmação
+    if (alterTela && txtRepsenha.getText().isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Repita a senha.");
+        txtRepsenha.requestFocus();
+        return;
+    }
+    
+    // Verificar se o usuário foi alterado após já ter sido encontrado
+    if (usuarioEncontrado && !txtUsuario.getText().equalsIgnoreCase(usuario)) {
+        JOptionPane.showMessageDialog(this, "Usuario foi alterado. Digite o Usuário novamente.");
+        txtUsuario.setText("");
+        txtUsuario.requestFocus();
+        // Reset das variáveis de controle
+        usuarioEncontrado = false;
+        alterTela = false;
+        return;
+    }
+    
+    // Se ainda não encontrou o usuário, buscar na lista
+    if (!usuarioEncontrado) {
+        List<Usuario> usuarios = usuarioDAO.listar();
+        
         for (Usuario u : usuarios) {
-            
             if (u.getUsuario().equalsIgnoreCase(txtUsuario.getText())) {
                 idUsuario = u.getId();
                 usuario = u.getUsuario();
@@ -286,120 +296,205 @@ public class frmLogin extends frmGenerico {
                 alterSenha = u.getAltersenha();
                 usuarioEncontrado = true;
                 idUsuariosecao = u.getId();
-                Usuario usuario = usuarioDAO.listar(idUsuario); 
-                permissao = usuario.getPermissao().getId();  
+                
+                // Buscar permissões do usuário
+                Usuario usuarioCompleto = usuarioDAO.listar(idUsuario); 
+                permissao = usuarioCompleto.getPermissao().getId();  
                 break;
             }
         }
         
-        if (usuarioEncontrado){
-            
-            if (!alterTela){
-                String senhaDigitada = txtSenha.getText();
-                if (!Seguranca.verificarSenha(senhaDigitada, senhaHashArmazenada)) {
-                //if (!senhaDigitada.equals("123")) {
-                    JOptionPane.showMessageDialog(null, "Senha incorreta!");
-                    txtSenha.setText("");
-                    txtSenha.requestFocus();
-                    return; 
-                } else {
-                    if (alterSenha == 0) {
-                        
-                        frmPrincipal principal = new frmPrincipal(idUsuariosecao, permissao);
-                        principal.setVisible(true);
-                        dispose();
-                        //new frmPrincipal().setVisible(true);
-                    }
-                    
-                }
-            } 
-        
-
-            if (alterSenha == 1){
-                if (!alterTela){
-                    JOptionPane.showMessageDialog(this, "Bem vindo! Senha provisória utilizada: Cadastre a nova senha!");
-                    lblRepsenha.setVisible(true);
-                    txtRepsenha.setVisible(true);
-                    lblTitulo.setText("Cadastrar Nova Senha");
-                    btnEntrar.setText("Salvar");
-                    txtSenha.setText("");
-                    txtSenha.requestFocus();
-                    alterTela = true;
-                    return;
-                }
-               
-                if (alterTela){
-                //Verifica se há campo vazio.
-                
-                /*if (txtUsuario.getText().isEmpty()) {
-                    JOptionPane.showMessageDialog(this, "Informe o usuário.");
-                    txtUsuario.requestFocus();
-                    return;
-                }
-
-                if (txtSenha.getText().isEmpty()) {
-                    JOptionPane.showMessageDialog(this, "Informe a senha.");
-                    txtSenha.requestFocus();
-                    return;
-                }
-                */
-                if (txtRepsenha.getText().isEmpty()) {
-                    JOptionPane.showMessageDialog(this, "Repita a senha.");
-                    txtRepsenha.requestFocus();
-                    return;
-                }
-
-                if (txtSenha.getText().equals(txtRepsenha.getText())){
-                    try {
-                        // Cria o objeto Usuario com os dados dos campos
-                        Usuario usuario = new Usuario();
-                        usuario.setId(idUsuario);
-                        usuario.setSenha(Seguranca.hashSenha(txtSenha.getText()));
-                        usuario.setAltersenha(0);
-
-                        // Chama a função editar
-                        UsuarioDAO usuarioDAO = DAOFactory.criarUsuarioDAO();
-                        int resultado = usuarioDAO.editarSenha(usuario);
-
-                        if (resultado > 0) {
-                            JOptionPane.showMessageDialog(null, "Senha alterada com sucesso!");
-                            lblRepsenha.setVisible(false);
-                            txtRepsenha.setVisible(false);
-                            lblTitulo.setText("Login");
-                            btnEntrar.setText("Entrar");
-                            txtSenha.setText("");
-                            txtSenha.requestFocus();
-                            alterTela = false;
-                            return;
-                            //limparCampos();
-                        } else {
-                            JOptionPane.showMessageDialog(null, "Falha ao cadastrar a senha!");
-                        }
-
-                    } catch (Exception ex) {
-                        ex.printStackTrace();
-                        JOptionPane.showMessageDialog(null, "Erro ao atualizar: " + ex.getMessage());
-                    }
-
-                } else {
-                    
-                    JOptionPane.showMessageDialog(this, "As Senhas digitadas são diferente!");
-                    txtRepsenha.setText("");
-                    txtRepsenha.requestFocus();
-                 
-                }
-                }
-            } 
-        }
-
-        if (!usuarioEncontrado){
+        // Se não encontrou o usuário
+        if (!usuarioEncontrado) {
             JOptionPane.showMessageDialog(null, "Usuário não encontrado!");
             txtUsuario.setText("");
             txtSenha.setText("");
             txtUsuario.requestFocus();
+            return;
+        }
+    }
+    
+    // Usuário foi encontrado, processar login ou alteração de senha
+    if (usuarioEncontrado) {
+        
+        // Caso 1: Primeira vez logando com senha que precisa ser alterada
+        if (alterSenha == 1 && !alterTela) {
+            String senhaDigitada = txtSenha.getText();
+            if (!Seguranca.verificarSenha(senhaDigitada, senhaHashArmazenada)) {
+                JOptionPane.showMessageDialog(null, "Senha incorreta!");
+                txtSenha.setText("");
+                txtSenha.requestFocus();
+                return; 
+            }
+            
+            // Senha correta, mas precisa alterar
+            String regrasSenha = "Bem vindo! Senha provisória utilizada: Cadastre a nova senha!\n\n" +
+                               "🔒 REGRAS PARA A NOVA SENHA:\n" +
+                               "• Mínimo de 6 caracteres\n" +
+                               "• Pelo menos 1 letra maiúscula (A-Z)\n" +
+                               "• Pelo menos 1 letra minúscula (a-z)\n" +
+                               "• Pelo menos 1 número (0-9)\n" +
+                               "• Pelo menos 1 caractere especial (!@#$%^&* etc.)\n" +
+                               "• Diferente da senha provisória atual";
+                               
+            JOptionPane.showMessageDialog(this, regrasSenha, "Nova Senha Obrigatória", JOptionPane.INFORMATION_MESSAGE);
+            lblRepsenha.setVisible(true);
+            txtRepsenha.setVisible(true);
+            lblTitulo.setText("Cadastrar Nova Senha");
+            btnEntrar.setText("Salvar");
+            txtSenha.setText("");
+            txtSenha.requestFocus();
+            alterTela = true;
+            return;
         }
         
+        // Caso 2: Está na tela de alteração de senha
+        else if (alterSenha == 1 && alterTela) {
+            String novaSenha = txtSenha.getText();
+            String confirmacaoSenha = txtRepsenha.getText();
+            
+            // 🔧 NOVA VALIDAÇÃO: Verificar se não está reutilizando a senha provisória
+            if (Seguranca.verificarSenha(novaSenha, senhaHashArmazenada)) {
+                JOptionPane.showMessageDialog(this, 
+                    "Você não pode reutilizar a senha provisória!\n" +
+                    "Por favor, digite uma senha diferente.", 
+                    "Senha Inválida", 
+                    JOptionPane.WARNING_MESSAGE);
+                txtSenha.setText("");
+                txtRepsenha.setText("");
+                txtSenha.requestFocus();
+                return;
+            }
+            
+            // Verificar se as senhas coincidem
+            if (!novaSenha.equals(confirmacaoSenha)) {
+                JOptionPane.showMessageDialog(this, "As Senhas digitadas são diferentes!");
+                txtRepsenha.setText("");
+                txtRepsenha.requestFocus();
+                return;
+            }
+            
+            // 🔧 VALIDAÇÃO ADICIONAL: Critérios mínimos de senha (opcional)
+            if (novaSenha.length() < 6) {
+                JOptionPane.showMessageDialog(this, 
+                    "A nova senha deve ter pelo menos 6 caracteres!", 
+                    "Senha Inválida", 
+                    JOptionPane.WARNING_MESSAGE);
+                txtSenha.setText("");
+                txtRepsenha.setText("");
+                txtSenha.requestFocus();
+                return;
+            }
+            
+            if (!novaSenha.matches(".*[A-Z].*")) {
+                JOptionPane.showMessageDialog(this, 
+                    "A nova senha deve ter pelo menos 1 letra maiúscula!", 
+                    "Senha Inválida", 
+                    JOptionPane.WARNING_MESSAGE);
+                txtSenha.setText("");
+                txtRepsenha.setText("");
+                txtSenha.requestFocus();
+                return;
+            }
+            
+            if (!novaSenha.matches(".*[a-z].*")) {
+                JOptionPane.showMessageDialog(this, 
+                    "A nova senha deve ter pelo menos 1 letra minúscula!", 
+                    "Senha Inválida", 
+                    JOptionPane.WARNING_MESSAGE);
+                txtSenha.setText("");
+                txtRepsenha.setText("");
+                txtSenha.requestFocus();
+                return;
+            }
+            
+            if (!novaSenha.matches(".*[0-9].*")) {
+                JOptionPane.showMessageDialog(this, 
+                    "A nova senha deve ter pelo menos 1 número!", 
+                    "Senha Inválida", 
+                    JOptionPane.WARNING_MESSAGE);
+                txtSenha.setText("");
+                txtRepsenha.setText("");
+                txtSenha.requestFocus();
+                return;
+            }
+
+            if (!novaSenha.matches(".*[!@#$%^&*()_+\\-=\\[\\]{};':\"\\\\|,.<>\\/?].*")) {
+                JOptionPane.showMessageDialog(this, 
+                    "A nova senha deve ter pelo menos 1 caracter especial!", 
+                    "Senha Inválida", 
+                    JOptionPane.WARNING_MESSAGE);
+                txtSenha.setText("");
+                txtRepsenha.setText("");
+                txtSenha.requestFocus();
+                return;
+            }
+
+            
+            try {
+                // Salvar nova senha
+                Usuario usuarioUpdate = new Usuario();
+                usuarioUpdate.setId(idUsuario);
+                usuarioUpdate.setSenha(Seguranca.hashSenha(novaSenha));
+                usuarioUpdate.setAltersenha(0);
+
+                UsuarioDAO dao = DAOFactory.criarUsuarioDAO();
+                int resultado = dao.editarSenha(usuarioUpdate);
+
+                if (resultado > 0) {
+                    JOptionPane.showMessageDialog(null, 
+                        "Senha alterada com sucesso!\n" +
+                        "Faça login com sua nova senha.", 
+                        "Sucesso", 
+                        JOptionPane.INFORMATION_MESSAGE);
+                    
+                    // 🔧 CORREÇÃO DO BUG: Recarregar dados do banco
+                    Usuario usuarioAtualizado = usuarioDAO.listar(idUsuario);
+                    senhaHashArmazenada = usuarioAtualizado.getSenha();
+                    alterSenha = usuarioAtualizado.getAltersenha();
+                    
+                    // Resetar interface
+                    lblRepsenha.setVisible(false);
+                    txtRepsenha.setVisible(false);
+                    lblTitulo.setText("Login");
+                    btnEntrar.setText("Entrar");
+                    txtSenha.setText("");
+                    txtRepsenha.setText("");
+                    
+                    // Atualizar controles
+                    alterTela = false;
+                    
+                    txtSenha.requestFocus();
+                    return;
+                } else {
+                    JOptionPane.showMessageDialog(null, "Falha ao cadastrar a senha!");
+                    return;
+                }
+
+            } catch (Exception ex) {
+                ex.printStackTrace();
+                JOptionPane.showMessageDialog(null, "Erro ao atualizar: " + ex.getMessage());
+                return;
+            }
+        }
+        
+        // Caso 3: Login normal (senha não precisa ser alterada)
+        else if (alterSenha == 0 && !alterTela) {
+            String senhaDigitada = txtSenha.getText();
+            if (!Seguranca.verificarSenha(senhaDigitada, senhaHashArmazenada)) {
+                JOptionPane.showMessageDialog(null, "Senha incorreta!");
+                txtSenha.setText("");
+                txtSenha.requestFocus();
+                return; 
+            }
+            
+            // Login bem-sucedido
+            frmPrincipal principal = new frmPrincipal(idUsuariosecao, permissao);
+            principal.setVisible(true);
+            dispose();
+        }
     }
+}
 
     /**
      * @param args the command line arguments

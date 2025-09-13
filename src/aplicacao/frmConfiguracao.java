@@ -212,7 +212,7 @@ public class frmConfiguracao extends frmGenericomodal {
         btnLog = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("EstoqControl - Usuários");
+        setTitle("Patrim - Configurações");
         setResizable(false);
         addWindowFocusListener(new java.awt.event.WindowFocusListener() {
             public void windowGainedFocus(java.awt.event.WindowEvent evt) {

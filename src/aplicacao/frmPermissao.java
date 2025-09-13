@@ -179,7 +179,7 @@ public class frmPermissao extends frmGenericomodal {
         btnLimpar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("EstoqControl - Permissões");
+        setTitle("Patrim - Permissões");
         setBackground(new java.awt.Color(204, 204, 204));
         setResizable(false);
         addWindowFocusListener(new java.awt.event.WindowFocusListener() {
@@ -510,7 +510,7 @@ public class frmPermissao extends frmGenericomodal {
                         int linha2 = permissaomoduloDAO.inserir(permissaomodulo);
                     }
                     
-                }catch (Exception e){
+                } catch (Exception e){
                     
                 }
                 
@@ -522,6 +522,7 @@ public class frmPermissao extends frmGenericomodal {
         } catch (Exception ex) {    
             JOptionPane.showMessageDialog(this, "Erro ao Inserir!");
         }
+        
     }//GEN-LAST:event_btnInserirActionPerformed
 
     /**
@@ -674,11 +675,14 @@ public class frmPermissao extends frmGenericomodal {
             JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, opcao, opcao[0]);
             if (opcaoSelecionada == 1) {
                 try {
-                    try{ 
-                        PermissaomoduloDAO del = DAOFactory.criarPermissaomoduloDAO();
-                        int apagar = del.apagar(idPermissao);
-                    }catch (Exception e){
+                    
+                    if (idPermissao != 1){
+                        try{ 
+                            PermissaomoduloDAO del = DAOFactory.criarPermissaomoduloDAO();
+                            int apagar = del.apagar(idPermissao);
+                        }catch (Exception e){
 
+                        }
                     }
                     
                     PermissaoDAO dao = DAOFactory.criarPermissaoDAO();
@@ -715,7 +719,8 @@ public class frmPermissao extends frmGenericomodal {
                     }
 
                 } catch (SQLIntegrityConstraintViolationException ex) {
-                    JOptionPane.showMessageDialog(null, "Não é possível excluir: Este registro está vinculado a outros registros.");
+                    JOptionPane.showMessageDialog(null, "Não é possível excluir: Este registro está vinculado a algum usuário.");
+                    ex.printStackTrace();
                 } catch (Exception ex) {
                     ex.printStackTrace();
                     JOptionPane.showMessageDialog(null, "Erro ao excluir o registro: " + ex.getMessage());

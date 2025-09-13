@@ -9,7 +9,6 @@
             <file>file:/C:/Users/robson.SRVLISBOAINFO/Desktop/ProjPOO/PatrimonioControl/PatrimonioControl/src/dao/LogDAOJDBC.java</file>
             <file>file:/C:/Users/robson.SRVLISBOAINFO/Desktop/ProjPOO/PatrimonioControl/PatrimonioControl/src/aplicacao/CustomRenderer.java</file>
             <file>file:/C:/Users/robson.SRVLISBOAINFO/Desktop/ProjPOO/PatrimonioControl/PatrimonioControl/src/dao/MovimentacaoDAOJDBC.java</file>
-            <file>file:/C:/Users/robson.SRVLISBOAINFO/Desktop/ProjPOO/PatrimonioControl/PatrimonioControl/src/modelo/Movimentacao.java</file>
             <file>file:/C:/Users/robson.SRVLISBOAINFO/Desktop/ProjPOO/PatrimonioControl/PatrimonioControl/src/aplicacao/frmUsuario.java</file>
             <file>file:/C:/Users/robson.SRVLISBOAINFO/Desktop/ProjPOO/PatrimonioControl/PatrimonioControl/src/aplicacao/frmMovimentacao.java</file>
             <file>file:/C:/Users/robson.SRVLISBOAINFO/Desktop/ProjPOO/PatrimonioControl/PatrimonioControl/src/aplicacao/frmUnidade.java</file>
@@ -29,8 +28,8 @@
             <file>file:/C:/Users/robson.SRVLISBOAINFO/Desktop/ProjPOO/PatrimonioControl/PatrimonioControl/src/modelo/Usuario.java</file>
             <file>file:/C:/Users/robson.SRVLISBOAINFO/Desktop/ProjPOO/PatrimonioControl/PatrimonioControl/src/modelo/Permissao.java</file>
             <file>file:/C:/Users/robson.SRVLISBOAINFO/Desktop/ProjPOO/PatrimonioControl/PatrimonioControl/src/dao/PermissaoDAO.java</file>
-            <file>file:/C:/Users/robson.SRVLISBOAINFO/Desktop/ProjPOO/PatrimonioControl/PatrimonioControl/src/aplicacao/NewJFrame.java</file>
             <file>file:/C:/Users/robson.SRVLISBOAINFO/Desktop/ProjPOO/PatrimonioControl/PatrimonioControl/src/modelo/Log.java</file>
+            <file>file:/C:/Users/robson.SRVLISBOAINFO/Desktop/ProjPOO/PatrimonioControl/PatrimonioControl/src/aplicacao/frmGenerico.java</file>
         </group>
     </open-files>
 </project-private>

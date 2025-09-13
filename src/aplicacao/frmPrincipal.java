@@ -100,12 +100,13 @@ public class frmPrincipal extends frmGenerico {
         menuModulo = new javax.swing.JMenuItem();
         jSeparator1 = new javax.swing.JPopupMenu.Separator();
         menuSair = new javax.swing.JMenuItem();
+        jMenuItem1 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         jMenu3 = new javax.swing.JMenu();
         jMenu4 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("EstoqControl - Principal");
+        setTitle("Patrim - Principal");
         addWindowFocusListener(new java.awt.event.WindowFocusListener() {
             public void windowGainedFocus(java.awt.event.WindowEvent evt) {
                 formWindowGainedFocus(evt);
@@ -262,7 +263,7 @@ public class frmPrincipal extends frmGenerico {
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Controle de Estoque e Movimentações");
+        jLabel1.setText("Patrimônio Control - Estoque e Movimentações");
         jLabel1.setVerticalAlignment(javax.swing.SwingConstants.TOP);
 
         jMenu1.setText("Cadastro");
@@ -320,6 +321,11 @@ public class frmPrincipal extends frmGenerico {
         menuMovimentacao.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_M, java.awt.event.InputEvent.CTRL_DOWN_MASK));
         menuMovimentacao.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recurso/movimentacao-de-carga.png"))); // NOI18N
         menuMovimentacao.setText("Movimentação");
+        menuMovimentacao.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuMovimentacaoActionPerformed(evt);
+            }
+        });
         jMenu1.add(menuMovimentacao);
 
         menuModulo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recurso/funcional (1).png"))); // NOI18N
@@ -339,6 +345,14 @@ public class frmPrincipal extends frmGenerico {
             }
         });
         jMenu1.add(menuSair);
+
+        jMenuItem1.setText("jMenuItem1");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem1);
 
         jMenuBar1.add(jMenu1);
 
@@ -381,6 +395,9 @@ public class frmPrincipal extends frmGenerico {
     private void setarPermissao(){
         // Pegue a lista de permissões
         List<Permissaomodulo> permissaomodulos = permissaomoduloDAO.listarPorPermissao(idPermissaosecao); 
+        
+        if (idPermissaosecao==1)
+            btnConfiguracao.setVisible(true);
         
         // Itera sobre cada objeto Permissaomodulo na lista
         for (Permissaomodulo permissaoModulo : permissaomodulos) {
@@ -557,10 +574,21 @@ public class frmPrincipal extends frmGenerico {
     }//GEN-LAST:event_btnMoviemtacaoActionPerformed
 
     private void formWindowGainedFocus(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowGainedFocus
+        btnConfiguracao.setVisible(false);
         setarPermissao();
         //this.setEnabled(true);
         //this.setVisible(true);// TODO add your handling code here:
     }//GEN-LAST:event_formWindowGainedFocus
+
+    private void menuMovimentacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuMovimentacaoActionPerformed
+        frmMovimentacao movimentacao = new frmMovimentacao(this, true, idUsuariosecao, idPermissaosecao);
+        movimentacao.setVisible(true);
+    }//GEN-LAST:event_menuMovimentacaoActionPerformed
+
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        frmConfiguracao configuracao = new frmConfiguracao(this, true, idUsuariosecao, idPermissaosecao);
+        configuracao.setVisible(true);        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     //Exemplo de função de permissao
     /*public boolean podeAcessar(String moduloNome, String acao) {
@@ -637,6 +665,7 @@ public class frmPrincipal extends frmGenerico {
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenu jMenu4;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JMenuItem menuEquipamento;
