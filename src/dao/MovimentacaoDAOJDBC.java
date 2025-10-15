@@ -80,11 +80,11 @@ public class MovimentacaoDAOJDBC implements MovimentacaoDAO{
                         "uo.id AS id_origem, uo.unidade AS unidade_origem, ud.id AS id_destino, ud.unidade AS unidade_destino, ul.id AS id_usuario_liberacao, \n" +
                         "ul.nome AS nome_usuario_liberacao, ur.id AS id_usuario_recepcao, ur.nome AS nome_usuario_recepcao\n" +
                         "FROM movimentacao m\n" +
-                        "JOIN equipamentos e ON m.id_equipamento = e.id\n" +
-                        "JOIN unidades uo ON m.id_origem = uo.id\n" +
-                        "JOIN unidades ud ON m.id_destino = ud.id\n" +
-                        "JOIN usuarios ul ON m.id_usuario_liberacao = ul.id\n" +
-                        "JOIN usuarios ur ON m.id_usuario_recepcao = ur.id\n" +
+                        "JOIN equipamento e ON m.id_equipamento = e.id\n" +
+                        "JOIN unidade uo ON m.id_origem = uo.id\n" +
+                        "JOIN unidade ud ON m.id_destino = ud.id\n" +
+                        "JOIN usuario ul ON m.id_usuario_liberacao = ul.id\n" +
+                        "JOIN usuario ur ON m.id_usuario_recepcao = ur.id\n" +
                         "ORDER BY m.id";
         List<Movimentacao> movimentacoes = new ArrayList<>();
         try {      
@@ -146,11 +146,11 @@ public class MovimentacaoDAOJDBC implements MovimentacaoDAO{
                         "uo.id AS id_origem, uo.unidade AS unidade_origem, ud.id AS id_destino, ud.unidade AS unidade_destino, ul.id AS id_usuario_liberacao, \n" +
                         "ul.nome AS nome_usuario_liberacao, ur.id AS id_usuario_recepcao, ur.nome AS nome_usuario_recepcao\n" +
                         "FROM movimentacao m\n" +
-                        "JOIN equipamentos e ON m.id_equipamento = e.id\n" +
-                        "JOIN unidades uo ON m.id_origem = uo.id\n" +
-                        "JOIN unidades ud ON m.id_destino = ud.id\n" +
-                        "JOIN usuarios ul ON m.id_usuario_liberacao = ul.id\n" +
-                        "JOIN usuarios ur ON m.id_usuario_recepcao = ur.id\n" +
+                        "JOIN equipamento e ON m.id_equipamento = e.id\n" +
+                        "JOIN unidade uo ON m.id_origem = uo.id\n" +
+                        "JOIN unidade ud ON m.id_destino = ud.id\n" +
+                        "JOIN usuario ul ON m.id_usuario_liberacao = ul.id\n" +
+                        "JOIN usuario ur ON m.id_usuario_recepcao = ur.id\n" +
                         "WHERE id = ?";
         Movimentacao movimentacao = new Movimentacao();
         try {        

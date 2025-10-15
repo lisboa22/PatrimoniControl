@@ -24,7 +24,7 @@ public class EquipamentoDAOJDBC implements EquipamentoDAO{
     public int inserir(Equipamento equipamento) throws ClassNotFoundException, SQLException, SQLIntegrityConstraintViolationException {
         StringBuilder sqlBuilder = new StringBuilder();
         sqlBuilder
-                .append("insert into equipamentos(nome, id_fabricante, data_insercao, data_alteracao) ")
+                .append("insert into equipamento(nome, id_fabricante, data_insercao, data_alteracao) ")
                 .append("VALUES (?, ?, ?, ?)");
         String insert = sqlBuilder.toString();
         int linha = 0;
@@ -52,7 +52,7 @@ public class EquipamentoDAOJDBC implements EquipamentoDAO{
     public List<Equipamento> listar() {
         ResultSet rset;
         String select = "SELECT e.id, e.nome, e.data_insercao, e.data_alteracao, f.id AS id_fabricante, f.nome AS nome_fabricante \n" +
-                        "FROM equipamentos e \n" +
+                        "FROM equipamento e \n" +
                         "JOIN fabricante f ON e.id_fabricante = f.id\n" +
                         "ORDER BY e.id";
         List<Equipamento> equipamentos = new ArrayList<>();
@@ -82,7 +82,7 @@ public class EquipamentoDAOJDBC implements EquipamentoDAO{
     public Equipamento listar(int id) {
         ResultSet rset;
         String select = "SELECT e.id, e.nome, e.data_insercao, e.data_alteracao, f.id AS id_fabricante, f.nome AS nome_fabricante \n" +
-                        "FROM equipamentos e \n" +
+                        "FROM equipamento e \n" +
                         "JOIN fabricante f ON e.id_fabricante = f.id\n" +
                         "WHERE e.id = ?";
         Equipamento equipamento = new Equipamento();
@@ -111,7 +111,7 @@ public class EquipamentoDAOJDBC implements EquipamentoDAO{
     public int editar(Equipamento equipamento) {
       StringBuilder sqlBuilder = new StringBuilder();
         sqlBuilder
-                .append("UPDATE equipamentos SET ")
+                .append("UPDATE equipamento SET ")
                 .append("nome = ?, ")
                 .append("id_fabricante = ?, ")
                 .append("data_alteracao = ? ")
@@ -133,7 +133,7 @@ public class EquipamentoDAOJDBC implements EquipamentoDAO{
     public int apagar(int id) throws ClassNotFoundException, SQLException, SQLIntegrityConstraintViolationException {
         StringBuilder sqlBuilder = new StringBuilder();
         sqlBuilder
-                .append("DELETE FROM equipamentos ")
+                .append("DELETE FROM equipamento ")
                 .append("WHERE id = ?");
         String delete = sqlBuilder.toString();
         int linha = 0;        

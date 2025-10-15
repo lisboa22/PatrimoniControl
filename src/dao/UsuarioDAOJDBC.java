@@ -4,6 +4,7 @@
  */
 package dao;
 
+import static aplicacao.Validadores.mensagemErro;
 import java.util.List;
 import modelo.Usuario;
 import java.sql.*;
@@ -34,12 +35,13 @@ public class UsuarioDAOJDBC implements UsuarioDAO{
     public int inserir(Usuario usuario) throws ClassNotFoundException, SQLException, SQLIntegrityConstraintViolationException {
         StringBuilder sqlBuilder = new StringBuilder();
         sqlBuilder
-                .append("insert into usuarios(nome, usuario, email, celular, id_permissao, senha, altersenha, data) ")
-                .append("VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+                .append("insert into usuario(nome, cpf, usuario, email, celular, id_permissao, senha, altersenha, data) ")
+                .append("VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
         String insert = sqlBuilder.toString();
         int linha = 0;
         try {  
             linha = DAOGenerico.executarComando(insert, usuario.getNome(),
+                                                        usuario.getCpf(),
                                                         usuario.getUsuario(),
                                                         usuario.getEmail(),
                                                         usuario.getCelular(),
@@ -49,13 +51,13 @@ public class UsuarioDAOJDBC implements UsuarioDAO{
                                                         usuario.getData()
                                                         );
         } catch (SQLIntegrityConstraintViolationException ex) {
-            JOptionPane.showMessageDialog(null, "Não é possível inserir: o email já está vinculado a outro Registro.");      
-            //ex.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Não é possível inserir: '" + mensagemErro(ex.getMessage())+"' já existe!");     
+            ex.printStackTrace();
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "bNão é possível inserir: o email já está vinculado a outro Registro.");      
-            //ex.printStackTrace();
+            ex.printStackTrace();
         } catch (Exception ex) {
-            //ex.printStackTrace();
+            ex.printStackTrace();
         }
         
         return linha;
@@ -65,8 +67,8 @@ public class UsuarioDAOJDBC implements UsuarioDAO{
     @Override
     public List<Usuario> listar() {
         ResultSet rset;
-        String select = "SELECT u.id, u.nome, u.usuario, u.email, u.celular, u.senha, u.altersenha, u.data, p.id AS id_permissao, p.nome AS nome_permissao \n" +
-                        "FROM usuarios u\n" +
+        String select = "SELECT u.id, u.nome, u.cpf, u.usuario, u.email, u.celular, u.senha, u.altersenha, u.data, p.id AS id_permissao, p.nome AS nome_permissao \n" +
+                        "FROM usuario u\n" +
                         "JOIN permissao p ON u.id_permissao = p.id\n" +
                         "ORDER BY u.id";
         List<Usuario> usuarios = new ArrayList<>();
@@ -82,6 +84,7 @@ public class UsuarioDAOJDBC implements UsuarioDAO{
                 Usuario usuario = new Usuario();
                 usuario.setId(rset.getInt("id"));
                 usuario.setNome(rset.getString("nome"));
+                usuario.setCpf(rset.getString("cpf"));
                 usuario.setUsuario(rset.getString("usuario"));
                 usuario.setEmail(rset.getString("email"));
                 usuario.setCelular(rset.getString("celular"));
@@ -101,8 +104,8 @@ public class UsuarioDAOJDBC implements UsuarioDAO{
     @Override
     public Usuario listar(int id) {
         ResultSet rset;
-        String select = "SELECT u.id, u.nome, u.usuario, u.email, u.celular, u.senha, u.altersenha, u.data, p.id AS id_permissao, p.nome AS nome_permissao \n" +
-                        "FROM usuarios u\n" +
+        String select = "SELECT u.id, u.nome, u.cpf, u.usuario, u.email, u.celular, u.senha, u.altersenha, u.data, p.id AS id_permissao, p.nome AS nome_permissao \n" +
+                        "FROM usuario u\n" +
                         "JOIN permissao p ON u.id_permissao = p.id\n" +
                         "WHERE u.id = ?";
         Usuario usuario = new Usuario();
@@ -116,6 +119,7 @@ public class UsuarioDAOJDBC implements UsuarioDAO{
           
                 usuario.setId(rset.getInt("id"));
                 usuario.setNome(rset.getString("nome"));
+                usuario.setCpf(rset.getString("cpf"));
                 usuario.setUsuario(rset.getString("usuario"));
                 usuario.setEmail(rset.getString("email"));
                 usuario.setCelular(rset.getString("celular"));
@@ -135,8 +139,9 @@ public class UsuarioDAOJDBC implements UsuarioDAO{
     public int editar(Usuario usuario) {
       StringBuilder sqlBuilder = new StringBuilder();
         sqlBuilder
-                .append("UPDATE usuarios SET ")
+                .append("UPDATE usuario SET ")
                 .append("nome = ?, ")
+                .append("cpf = ?, ")
                 .append("usuario = ?, ")
                 .append("email = ?, ")
                 .append("celular = ?, ")
@@ -148,6 +153,7 @@ public class UsuarioDAOJDBC implements UsuarioDAO{
         int linha = 0;
         try {
             linha = DAOGenerico.executarComando(update, usuario.getNome(),
+                                                        usuario.getCpf(),
                                                         usuario.getUsuario(),
                                                         usuario.getEmail(),
                                                         usuario.getCelular(),
@@ -166,7 +172,7 @@ public class UsuarioDAOJDBC implements UsuarioDAO{
     public int editarSenha(Usuario usuario) {
       StringBuilder sqlBuilder = new StringBuilder();
         sqlBuilder
-                .append("UPDATE usuarios SET ")
+                .append("UPDATE usuario SET ")
                 .append("senha = ?, ")
                 .append("altersenha = ? ")
                 .append("WHERE id = ?");
@@ -186,7 +192,7 @@ public class UsuarioDAOJDBC implements UsuarioDAO{
     public int apagar(int id) throws ClassNotFoundException, SQLException, SQLIntegrityConstraintViolationException {
         StringBuilder sqlBuilder = new StringBuilder();
         sqlBuilder
-                .append("DELETE FROM usuarios ")
+                .append("DELETE FROM usuario ")
                 .append("WHERE id = ?");
         String delete = sqlBuilder.toString();
         int linha = 0;        

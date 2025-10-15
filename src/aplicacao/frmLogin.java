@@ -5,6 +5,7 @@
 package aplicacao;
 
 //import aplicacao.Seguranca;
+import dao.ConfigsenhaDAO;
 import dao.DAOFactory;
 import dao.PermissaoDAO;
 import dao.UsuarioDAO;
@@ -14,15 +15,18 @@ import java.util.List;
 import javax.swing.JOptionPane;
 //import javax.swing.SwingUtilities;
 import javax.swing.text.AbstractDocument;
+import modelo.Configsenha;
 import modelo.Permissao;
 import modelo.Permissaomodulo;
 import modelo.Usuario;
+import util.GeradorRelatorio;
 
 /**
  *
  * @author robson
  */
 public class frmLogin extends frmGenerico {
+     ConfigsenhaDAO configsenhaDAO = DAOFactory.criarConfigsenhaDAO();
     //private final String PATH_ICON="/recurso/estoque-pronto.png";
     private int idUsuario;
     //private boolean novaSenha = false;
@@ -43,6 +47,7 @@ public class frmLogin extends frmGenerico {
      * Creates new form frmLogin
      */
     public frmLogin() {
+        
         initComponents();
         initEstiloGlobal();
         //ImageIcon imageicon = new ImageIcon(getClass().getResource(PATH_ICON));
@@ -159,7 +164,9 @@ public class frmLogin extends frmGenerico {
         lblTitulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblTitulo.setText("Login");
 
+        btnEntrar.setBackground(new java.awt.Color(0, 102, 153));
         btnEntrar.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        btnEntrar.setForeground(new java.awt.Color(255, 255, 255));
         btnEntrar.setText("Entrar");
         btnEntrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -326,15 +333,42 @@ private void logar(){
                 txtSenha.requestFocus();
                 return; 
             }
+            List<Configsenha> configsenhas = configsenhaDAO.listar();
+            
+            String minimocaracter = ""; 
+            String maiusculo = "";
+            String minusculo = "";
+            String numeros = "";
+            String caracterespecial = "";
+            
+            if (configsenhas.getFirst().isMinimocaracter()){
+                minimocaracter = "• Mínimo de 6 caracteres\n";
+            }
+            
+            if (configsenhas.getFirst().isLetramaiuscula()){
+                maiusculo = "• Pelo menos 1 letra maiúscula (A-Z)\n";
+            }
+            
+            if (configsenhas.getFirst().isLetraminuscula()){
+                minusculo = "• Pelo menos 1 letra minúscula (a-z)\n";
+            }
+            
+            if (configsenhas.getFirst().isNumeros()){
+                numeros = "• Pelo menos 1 número (0-9)\n";
+            }
+            
+            if (configsenhas.getFirst().isCaracterespecial()){
+                caracterespecial = "• Pelo menos 1 caractere especial (!@#$%^&* etc.)\n";
+            }
             
             // Senha correta, mas precisa alterar
             String regrasSenha = "Bem vindo! Senha provisória utilizada: Cadastre a nova senha!\n\n" +
                                "🔒 REGRAS PARA A NOVA SENHA:\n" +
-                               "• Mínimo de 6 caracteres\n" +
-                               "• Pelo menos 1 letra maiúscula (A-Z)\n" +
-                               "• Pelo menos 1 letra minúscula (a-z)\n" +
-                               "• Pelo menos 1 número (0-9)\n" +
-                               "• Pelo menos 1 caractere especial (!@#$%^&* etc.)\n" +
+                               minimocaracter +
+                               maiusculo +
+                               minusculo +
+                               numeros +
+                               caracterespecial +
                                "• Diferente da senha provisória atual";
                                
             JOptionPane.showMessageDialog(this, regrasSenha, "Nova Senha Obrigatória", JOptionPane.INFORMATION_MESSAGE);
@@ -352,6 +386,7 @@ private void logar(){
         else if (alterSenha == 1 && alterTela) {
             String novaSenha = txtSenha.getText();
             String confirmacaoSenha = txtRepsenha.getText();
+            List<Configsenha> configsenhas = configsenhaDAO.listar();
             
             // 🔧 NOVA VALIDAÇÃO: Verificar se não está reutilizando a senha provisória
             if (Seguranca.verificarSenha(novaSenha, senhaHashArmazenada)) {
@@ -375,60 +410,70 @@ private void logar(){
             }
             
             // 🔧 VALIDAÇÃO ADICIONAL: Critérios mínimos de senha (opcional)
-            if (novaSenha.length() < 6) {
-                JOptionPane.showMessageDialog(this, 
-                    "A nova senha deve ter pelo menos 6 caracteres!", 
-                    "Senha Inválida", 
-                    JOptionPane.WARNING_MESSAGE);
-                txtSenha.setText("");
-                txtRepsenha.setText("");
-                txtSenha.requestFocus();
-                return;
+            if (configsenhas.getFirst().isMinimocaracter()){
+                if (novaSenha.length() < 6) {
+                    JOptionPane.showMessageDialog(this, 
+                        "A nova senha deve ter pelo menos 6 caracteres!", 
+                        "Senha Inválida", 
+                        JOptionPane.WARNING_MESSAGE);
+                    txtSenha.setText("");
+                    txtRepsenha.setText("");
+                    txtSenha.requestFocus();
+                    return;
+                }
             }
             
-            if (!novaSenha.matches(".*[A-Z].*")) {
-                JOptionPane.showMessageDialog(this, 
-                    "A nova senha deve ter pelo menos 1 letra maiúscula!", 
-                    "Senha Inválida", 
-                    JOptionPane.WARNING_MESSAGE);
-                txtSenha.setText("");
-                txtRepsenha.setText("");
-                txtSenha.requestFocus();
-                return;
+            if (configsenhas.getFirst().isLetramaiuscula()){
+                if (!novaSenha.matches(".*[A-Z].*")) {
+                    JOptionPane.showMessageDialog(this, 
+                        "A nova senha deve ter pelo menos 1 letra maiúscula!", 
+                        "Senha Inválida", 
+                        JOptionPane.WARNING_MESSAGE);
+                    txtSenha.setText("");
+                    txtRepsenha.setText("");
+                    txtSenha.requestFocus();
+                    return;
+                }
+            } 
+            
+            if (configsenhas.getFirst().isLetraminuscula()){
+                if (!novaSenha.matches(".*[a-z].*")) {
+                    JOptionPane.showMessageDialog(this, 
+                        "A nova senha deve ter pelo menos 1 letra minúscula!", 
+                        "Senha Inválida", 
+                        JOptionPane.WARNING_MESSAGE);
+                    txtSenha.setText("");
+                    txtRepsenha.setText("");
+                    txtSenha.requestFocus();
+                    return;
+                }
             }
             
-            if (!novaSenha.matches(".*[a-z].*")) {
-                JOptionPane.showMessageDialog(this, 
-                    "A nova senha deve ter pelo menos 1 letra minúscula!", 
-                    "Senha Inválida", 
-                    JOptionPane.WARNING_MESSAGE);
-                txtSenha.setText("");
-                txtRepsenha.setText("");
-                txtSenha.requestFocus();
-                return;
+            if (configsenhas.getFirst().isNumeros()){
+                if (!novaSenha.matches(".*[0-9].*")) {
+                    JOptionPane.showMessageDialog(this, 
+                        "A nova senha deve ter pelo menos 1 número!", 
+                        "Senha Inválida", 
+                        JOptionPane.WARNING_MESSAGE);
+                    txtSenha.setText("");
+                    txtRepsenha.setText("");
+                    txtSenha.requestFocus();
+                    return;
+                }
             }
             
-            if (!novaSenha.matches(".*[0-9].*")) {
-                JOptionPane.showMessageDialog(this, 
-                    "A nova senha deve ter pelo menos 1 número!", 
-                    "Senha Inválida", 
-                    JOptionPane.WARNING_MESSAGE);
-                txtSenha.setText("");
-                txtRepsenha.setText("");
-                txtSenha.requestFocus();
-                return;
-            }
-
-            if (!novaSenha.matches(".*[!@#$%^&*()_+\\-=\\[\\]{};':\"\\\\|,.<>\\/?].*")) {
-                JOptionPane.showMessageDialog(this, 
-                    "A nova senha deve ter pelo menos 1 caracter especial!", 
-                    "Senha Inválida", 
-                    JOptionPane.WARNING_MESSAGE);
-                txtSenha.setText("");
-                txtRepsenha.setText("");
-                txtSenha.requestFocus();
-                return;
-            }
+            if (configsenhas.getFirst().isCaracterespecial()){
+                if (!novaSenha.matches(".*[!@#$%^&*()_+\\-=\\[\\]{};':\"\\\\|,.<>\\/?].*")) {
+                    JOptionPane.showMessageDialog(this, 
+                        "A nova senha deve ter pelo menos 1 caracter especial!", 
+                        "Senha Inválida", 
+                        JOptionPane.WARNING_MESSAGE);
+                    txtSenha.setText("");
+                    txtRepsenha.setText("");
+                    txtSenha.requestFocus();
+                    return;
+                }
+            }    
 
             
             try {

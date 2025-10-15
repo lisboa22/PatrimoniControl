@@ -11,10 +11,12 @@ import dao.PermissaomoduloDAO;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.print.PrinterJob;
 import java.util.List;
 //import javax.swing.ImageIcon;
 //import modelo.Modulo;
 import modelo.Permissaomodulo;
+import util.GeradorRelatorio;
 
 
 
@@ -39,8 +41,10 @@ public class frmPrincipal extends frmGenerico {
         this.idUsuariosecao = idUsuariosecao;
         this.idPermissaosecao = idPermissaosecao; //********
         initComponents();
+        //carregarDialogoImpressao();
+        // Desabilita a descoberta automática de impressoras de rede
         
-     
+        jButton1.setVisible(false);
         //ImageIcon imageicon = new ImageIcon(getClass().getResource(PATH_ICON));
         //this.setIconImage(imageicon.getImage());
         //lblPermissao.setText(Integer.toString(permissao));
@@ -88,7 +92,10 @@ public class frmPrincipal extends frmGenerico {
         btnFabricante = new javax.swing.JButton();
         btnModulo = new javax.swing.JButton();
         btnConfiguracao = new javax.swing.JButton();
+        btnLogoff = new javax.swing.JButton();
+        btnSair = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         menuPermissao = new javax.swing.JMenuItem();
@@ -98,9 +105,9 @@ public class frmPrincipal extends frmGenerico {
         menuUnidade = new javax.swing.JMenuItem();
         menuMovimentacao = new javax.swing.JMenuItem();
         menuModulo = new javax.swing.JMenuItem();
+        menuConfiguracao = new javax.swing.JMenuItem();
         jSeparator1 = new javax.swing.JPopupMenu.Separator();
         menuSair = new javax.swing.JMenuItem();
-        jMenuItem1 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         jMenu3 = new javax.swing.JMenu();
         jMenu4 = new javax.swing.JMenu();
@@ -115,6 +122,9 @@ public class frmPrincipal extends frmGenerico {
             }
         });
         addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                formWindowClosed(evt);
+            }
             public void windowOpened(java.awt.event.WindowEvent evt) {
                 formWindowOpened(evt);
             }
@@ -123,8 +133,10 @@ public class frmPrincipal extends frmGenerico {
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "CADASTROS", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Segoe UI", 1, 12))); // NOI18N
         jPanel1.setToolTipText("Cadastros");
 
+        btnEquipamento.setBackground(new java.awt.Color(0, 153, 153));
         btnEquipamento.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        btnEquipamento.setIcon(new javax.swing.ImageIcon("C:\\Users\\robson.SRVLISBOAINFO\\Desktop\\ProjPOO\\PatrimonioControl\\PatrimonioControl\\src\\recurso\\gerador-eletrico (1).png")); // NOI18N
+        btnEquipamento.setForeground(new java.awt.Color(255, 255, 255));
+        btnEquipamento.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recurso/gerador-eletrico (1).png"))); // NOI18N
         btnEquipamento.setText("Equipamentos");
         btnEquipamento.setEnabled(false);
         btnEquipamento.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -135,8 +147,10 @@ public class frmPrincipal extends frmGenerico {
             }
         });
 
+        btnUnidade.setBackground(new java.awt.Color(0, 102, 153));
         btnUnidade.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        btnUnidade.setIcon(new javax.swing.ImageIcon("C:\\Users\\robson.SRVLISBOAINFO\\Desktop\\ProjPOO\\PatrimonioControl\\PatrimonioControl\\src\\recurso\\casa-limpa (1).png")); // NOI18N
+        btnUnidade.setForeground(new java.awt.Color(255, 255, 255));
+        btnUnidade.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recurso/casa-limpa (1).png"))); // NOI18N
         btnUnidade.setText("Unidades");
         btnUnidade.setEnabled(false);
         btnUnidade.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -147,8 +161,10 @@ public class frmPrincipal extends frmGenerico {
             }
         });
 
+        btnUsuario.setBackground(new java.awt.Color(0, 102, 153));
         btnUsuario.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        btnUsuario.setIcon(new javax.swing.ImageIcon("C:\\Users\\robson.SRVLISBOAINFO\\Desktop\\ProjPOO\\PatrimonioControl\\PatrimonioControl\\src\\recurso\\adicionar-usuario (1).png")); // NOI18N
+        btnUsuario.setForeground(new java.awt.Color(255, 255, 255));
+        btnUsuario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recurso/adicionar-usuario (1).png"))); // NOI18N
         btnUsuario.setText("Usuários");
         btnUsuario.setEnabled(false);
         btnUsuario.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -159,8 +175,10 @@ public class frmPrincipal extends frmGenerico {
             }
         });
 
+        btnMoviemtacao.setBackground(new java.awt.Color(255, 51, 0));
         btnMoviemtacao.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        btnMoviemtacao.setIcon(new javax.swing.ImageIcon("C:\\Users\\robson.SRVLISBOAINFO\\Desktop\\ProjPOO\\PatrimonioControl\\PatrimonioControl\\src\\recurso\\movimentacao-de-carga (1).png")); // NOI18N
+        btnMoviemtacao.setForeground(new java.awt.Color(255, 255, 255));
+        btnMoviemtacao.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recurso/estoque (1).png"))); // NOI18N
         btnMoviemtacao.setText("Movimentação");
         btnMoviemtacao.setEnabled(false);
         btnMoviemtacao.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -171,7 +189,9 @@ public class frmPrincipal extends frmGenerico {
             }
         });
 
+        btnPermissao.setBackground(new java.awt.Color(0, 153, 153));
         btnPermissao.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        btnPermissao.setForeground(new java.awt.Color(255, 255, 255));
         btnPermissao.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recurso/chaveiro.png"))); // NOI18N
         btnPermissao.setText("Permissões");
         btnPermissao.setEnabled(false);
@@ -183,7 +203,9 @@ public class frmPrincipal extends frmGenerico {
             }
         });
 
+        btnFabricante.setBackground(new java.awt.Color(0, 153, 153));
         btnFabricante.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        btnFabricante.setForeground(new java.awt.Color(255, 255, 255));
         btnFabricante.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recurso/fabrica.png"))); // NOI18N
         btnFabricante.setText("Fabricante");
         btnFabricante.setEnabled(false);
@@ -195,7 +217,9 @@ public class frmPrincipal extends frmGenerico {
             }
         });
 
+        btnModulo.setBackground(new java.awt.Color(255, 51, 0));
         btnModulo.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        btnModulo.setForeground(new java.awt.Color(255, 255, 255));
         btnModulo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recurso/funcional.png"))); // NOI18N
         btnModulo.setText("Funções");
         btnModulo.setEnabled(false);
@@ -207,7 +231,10 @@ public class frmPrincipal extends frmGenerico {
             }
         });
 
-        btnConfiguracao.setIcon(new javax.swing.ImageIcon("C:\\Users\\robson.SRVLISBOAINFO\\Desktop\\ProjPOO\\PatrimonioControl\\PatrimonioControl\\src\\recurso\\configuracao (1).png")); // NOI18N
+        btnConfiguracao.setBackground(new java.awt.Color(0, 153, 153));
+        btnConfiguracao.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        btnConfiguracao.setForeground(new java.awt.Color(255, 255, 255));
+        btnConfiguracao.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recurso/configuracao (1).png"))); // NOI18N
         btnConfiguracao.setText("Configuração");
         btnConfiguracao.setEnabled(false);
         btnConfiguracao.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -215,6 +242,32 @@ public class frmPrincipal extends frmGenerico {
         btnConfiguracao.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnConfiguracaoActionPerformed(evt);
+            }
+        });
+
+        btnLogoff.setBackground(new java.awt.Color(255, 0, 51));
+        btnLogoff.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        btnLogoff.setForeground(new java.awt.Color(255, 255, 255));
+        btnLogoff.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recurso/logout.png"))); // NOI18N
+        btnLogoff.setText("Logoff");
+        btnLogoff.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnLogoff.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnLogoff.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLogoffActionPerformed(evt);
+            }
+        });
+
+        btnSair.setBackground(new java.awt.Color(255, 0, 51));
+        btnSair.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        btnSair.setForeground(new java.awt.Color(255, 255, 255));
+        btnSair.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recurso/poder.png"))); // NOI18N
+        btnSair.setText("Sair");
+        btnSair.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnSair.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnSair.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSairActionPerformed(evt);
             }
         });
 
@@ -241,30 +294,47 @@ public class frmPrincipal extends frmGenerico {
                         .addComponent(btnUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(btnFabricante, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(26, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnSair, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnLogoff, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnModulo, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnPermissao, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnFabricante, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(btnMoviemtacao, javax.swing.GroupLayout.DEFAULT_SIZE, 105, Short.MAX_VALUE)
-                    .addComponent(btnUnidade, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnEquipamento, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnConfiguracao, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(btnLogoff, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnSair, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnModulo, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnPermissao, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnFabricante, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(btnMoviemtacao, javax.swing.GroupLayout.DEFAULT_SIZE, 105, Short.MAX_VALUE)
+                            .addComponent(btnUnidade, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnEquipamento, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnConfiguracao, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
         );
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Patrimônio Control - Estoque e Movimentações");
-        jLabel1.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+
+        jButton1.setText("jButton1");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jMenu1.setText("Cadastro");
 
@@ -336,8 +406,18 @@ public class frmPrincipal extends frmGenerico {
             }
         });
         jMenu1.add(menuModulo);
+
+        menuConfiguracao.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recurso/configuracao.png"))); // NOI18N
+        menuConfiguracao.setText("Configuração");
+        menuConfiguracao.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuConfiguracaoActionPerformed(evt);
+            }
+        });
+        jMenu1.add(menuConfiguracao);
         jMenu1.add(jSeparator1);
 
+        menuSair.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recurso/poder (1).png"))); // NOI18N
         menuSair.setText("Sair");
         menuSair.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -345,14 +425,6 @@ public class frmPrincipal extends frmGenerico {
             }
         });
         jMenu1.add(menuSair);
-
-        jMenuItem1.setText("jMenuItem1");
-        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem1ActionPerformed(evt);
-            }
-        });
-        jMenu1.add(jMenuItem1);
 
         jMenuBar1.add(jMenu1);
 
@@ -373,18 +445,24 @@ public class frmPrincipal extends frmGenerico {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 713, Short.MAX_VALUE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addGap(213, 213, 213)
+                .addComponent(jButton1)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
+            .addGroup(layout.createSequentialGroup()
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(73, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jButton1)
+                .addGap(0, 9, Short.MAX_VALUE))
         );
 
         pack();
@@ -396,8 +474,10 @@ public class frmPrincipal extends frmGenerico {
         // Pegue a lista de permissões
         List<Permissaomodulo> permissaomodulos = permissaomoduloDAO.listarPorPermissao(idPermissaosecao); 
         
-        if (idPermissaosecao==1)
+        if (idPermissaosecao==1){
             btnConfiguracao.setVisible(true);
+            menuConfiguracao.setVisible(true);
+        }
         
         // Itera sobre cada objeto Permissaomodulo na lista
         for (Permissaomodulo permissaoModulo : permissaomodulos) {
@@ -500,7 +580,7 @@ public class frmPrincipal extends frmGenerico {
     }//GEN-LAST:event_menuEquipamentoActionPerformed
 
     private void menuSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuSairActionPerformed
-        System.exit(0);        // TODO add your handling code here:
+        System.exit(0);
     }//GEN-LAST:event_menuSairActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
@@ -575,9 +655,10 @@ public class frmPrincipal extends frmGenerico {
 
     private void formWindowGainedFocus(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowGainedFocus
         btnConfiguracao.setVisible(false);
+        menuConfiguracao.setVisible(false);
         setarPermissao();
         //this.setEnabled(true);
-        //this.setVisible(true);// TODO add your handling code here:
+        //this.setVisible(true);
     }//GEN-LAST:event_formWindowGainedFocus
 
     private void menuMovimentacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuMovimentacaoActionPerformed
@@ -585,36 +666,65 @@ public class frmPrincipal extends frmGenerico {
         movimentacao.setVisible(true);
     }//GEN-LAST:event_menuMovimentacaoActionPerformed
 
-    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+    private void menuConfiguracaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuConfiguracaoActionPerformed
         frmConfiguracao configuracao = new frmConfiguracao(this, true, idUsuariosecao, idPermissaosecao);
         configuracao.setVisible(true);        // TODO add your handling code here:
-    }//GEN-LAST:event_jMenuItem1ActionPerformed
+    }//GEN-LAST:event_menuConfiguracaoActionPerformed
 
-    //Exemplo de função de permissao
-    /*public boolean podeAcessar(String moduloNome, String acao) {
-        for (PermissaoModulo pm : permissoesDoUsuario) {
-            if (pm.getModulo().equals(moduloNome)) {
-                switch (acao) {
-                    case "ver": return pm.isPodeVer();
-                    case "criar": return pm.isPodeCriar();
-                    case "editar": return pm.isPodeEditar();
-                    case "deletar": return pm.isPodeDeletar();
-                }
-            }
-        }
-        return false;
-    }*/
+    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
+        new frmLogin().setVisible(true);
+    }//GEN-LAST:event_formWindowClosed
+
+    private void btnLogoffActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogoffActionPerformed
+        //new frmLogin().setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnLogoffActionPerformed
+
+    private void btnSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSairActionPerformed
+        System.exit(0);
+    }//GEN-LAST:event_btnSairActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        carregarDialogoImpressao();
+    }//GEN-LAST:event_jButton1ActionPerformed
+
     
-    //Exemplo de uso da função permissão
-    /*if (!podeAcessar("Controle de Estoque", "editar")) {
-        JOptionPane.showMessageDialog(null, "Você não tem permissão para editar o estoque!");
-        return;
-    }*/
+    public static boolean carregarDialogoImpressao() {
+        // 1. Obtém uma instância do PrinterJob.
+        // O PrinterJob é o ponto de controle para a impressão.
+        PrinterJob job = PrinterJob.getPrinterJob();
+
+        // 2. Chama o diálogo de impressão.
+        // O método printDialog() exibe a caixa de diálogo nativa do sistema
+        // e retorna true se o usuário pressionar OK/Imprimir, e false se pressionar Cancelar.
+        boolean deveImprimir = job.printDialog();
+
+        // 3. (Opcional, mas recomendado para um fluxo completo) 
+        // Se o usuário confirmou no diálogo, você pode iniciar o processo de impressão.
+        if (deveImprimir) {
+            System.out.println("Usuário confirmou a impressão. Iniciando processo...");
+            try {
+                // job.print(); // Descomente esta linha para realmente iniciar a impressão.
+                // *Atenção:* Se descomentar, é necessário ter um 'Printable' 
+                // ou 'Pageable' configurado no 'job' antes de chamar 'printDialog()'.
+                
+            } catch (Exception e) { // Uso de Exception genérico para simplificar o exemplo.
+                System.err.println("Erro durante a impressão: " + e.getMessage());
+                // Você pode querer lançar uma exceção específica ou tratar o erro de forma mais robusta.
+            }
+        } else {
+            System.out.println("Usuário cancelou a impressão.");
+        }
+        
+        return deveImprimir;
+    }
     
     /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
+        
+        
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -654,20 +764,23 @@ public class frmPrincipal extends frmGenerico {
     private javax.swing.JButton btnConfiguracao;
     private javax.swing.JButton btnEquipamento;
     private javax.swing.JButton btnFabricante;
+    private javax.swing.JButton btnLogoff;
     private javax.swing.JButton btnModulo;
     private javax.swing.JButton btnMoviemtacao;
     private javax.swing.JButton btnPermissao;
+    private javax.swing.JButton btnSair;
     private javax.swing.JButton btnUnidade;
     private javax.swing.JButton btnUsuario;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenu jMenu4;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPopupMenu.Separator jSeparator1;
+    private javax.swing.JMenuItem menuConfiguracao;
     private javax.swing.JMenuItem menuEquipamento;
     private javax.swing.JMenuItem menuFabricante;
     private javax.swing.JMenuItem menuModulo;

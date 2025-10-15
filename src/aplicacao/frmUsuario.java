@@ -6,6 +6,7 @@ package aplicacao;
 
 import static aplicacao.Validadores.isValidCelular;
 import static aplicacao.Validadores.isValidEmail;
+import static aplicacao.Validadores.isValidCpf;
 import dao.DAOFactory;
 import dao.ModuloDAO;
 import dao.LogDAO;
@@ -87,7 +88,7 @@ public class frmUsuario extends frmGenericomodal {
         // Define um modelo de tabela que não permite edição de células
         modelo = new DefaultTableModel(
             new Object[][]{},
-            new String[]{"ID*", "NOME*", "USUÁRIO*", "EMAIL*", "CELULAR*", "PERMISSÃO*", "DATA*"}
+            new String[]{"ID*", "NOME*", "CPF*", "USUÁRIO*", "EMAIL*", "CELULAR*", "PERMISSÃO*", "DATA*"}
         ) {
             @Override
             public boolean isCellEditable(int row, int column) {
@@ -156,11 +157,11 @@ public class frmUsuario extends frmGenericomodal {
             
                 modelo.addRow(new Object[]{usuario.getId(),
                                            usuario.getNome(),
+                                           usuario.getCpf(),
                                            usuario.getUsuario(),
                                            usuario.getEmail(),
                                            usuario.getCelular(),
                                            usuario.getPermissao().getNome(),
-                                           //usuario.getSenha(),
                                            dataFormatada});
             }
         } catch (Exception e) {
@@ -221,10 +222,14 @@ public class frmUsuario extends frmGenericomodal {
         lblPesquisa = new javax.swing.JLabel();
         txtBusca = new javax.swing.JTextField();
         lblSenha = new javax.swing.JLabel();
-        ftxtCelular = new javax.swing.JFormattedTextField();
-        ptxtSenha = new javax.swing.JPasswordField();
+        txtCelular = new javax.swing.JFormattedTextField();
+        txtSenha = new javax.swing.JPasswordField();
         cmbPermissao = new javax.swing.JComboBox<>();
         lblTitulo = new javax.swing.JLabel();
+        txtCpf = new javax.swing.JFormattedTextField();
+        lblCpf = new javax.swing.JLabel();
+        cmbFiltro = new javax.swing.JComboBox<>();
+        jLabel1 = new javax.swing.JLabel();
         panInferior = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblUsuario = new javax.swing.JTable();
@@ -301,24 +306,24 @@ public class frmUsuario extends frmGenericomodal {
         lblSenha.setText("SENHA*");
 
         try {
-            ftxtCelular.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("(##) #####-####")));
+            txtCelular.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("(##) #####-####")));
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
-        ftxtCelular.addFocusListener(new java.awt.event.FocusAdapter() {
+        txtCelular.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
-                ftxtCelularFocusLost(evt);
+                txtCelularFocusLost(evt);
             }
         });
-        ftxtCelular.addKeyListener(new java.awt.event.KeyAdapter() {
+        txtCelular.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
-                ftxtCelularKeyPressed(evt);
+                txtCelularKeyPressed(evt);
             }
         });
 
-        ptxtSenha.addMouseListener(new java.awt.event.MouseAdapter() {
+        txtSenha.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                ptxtSenhaMouseClicked(evt);
+                txtSenhaMouseClicked(evt);
             }
         });
 
@@ -332,24 +337,59 @@ public class frmUsuario extends frmGenericomodal {
         lblTitulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblTitulo.setText("USUÁRIOS");
 
+        try {
+            txtCpf.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###.###.###-##")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+        txtCpf.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtCpfFocusLost(evt);
+            }
+        });
+        txtCpf.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                txtCpfMouseClicked(evt);
+            }
+        });
+        txtCpf.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtCpfKeyPressed(evt);
+            }
+        });
+
+        lblCpf.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        lblCpf.setText("CPF*");
+
+        cmbFiltro.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "NOME", "CPF", "USUÁRIO", "EMAIL" }));
+
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel1.setText("FILTRO:");
+
         javax.swing.GroupLayout panSuperiorLayout = new javax.swing.GroupLayout(panSuperior);
         panSuperior.setLayout(panSuperiorLayout);
         panSuperiorLayout.setHorizontalGroup(
             panSuperiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panSuperiorLayout.createSequentialGroup()
-                .addGroup(panSuperiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 696, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(panSuperiorLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(lblPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(0, 0, Short.MAX_VALUE))
-            .addGroup(panSuperiorLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(panSuperiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panSuperiorLayout.createSequentialGroup()
+                        .addComponent(txtBusca, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(panSuperiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblNome, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(cmbFiltro, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panSuperiorLayout.createSequentialGroup()
+                        .addGroup(panSuperiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(panSuperiorLayout.createSequentialGroup()
+                                .addComponent(lblNome, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(lblCpf, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(panSuperiorLayout.createSequentialGroup()
+                                .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtCpf, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(panSuperiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lblUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -360,8 +400,8 @@ public class frmUsuario extends frmGenericomodal {
                             .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(panSuperiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblCelular, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(ftxtCelular, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtCelular, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblCelular, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(panSuperiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                             .addGroup(panSuperiorLayout.createSequentialGroup()
@@ -370,12 +410,14 @@ public class frmUsuario extends frmGenericomodal {
                             .addComponent(cmbPermissao, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(panSuperiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(ptxtSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(420, 420, 420))
+                            .addComponent(txtSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(309, 309, 309))
                     .addGroup(panSuperiorLayout.createSequentialGroup()
-                        .addComponent(txtBusca, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addGroup(panSuperiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 797, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
         panSuperiorLayout.setVerticalGroup(
             panSuperiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -383,9 +425,13 @@ public class frmUsuario extends frmGenericomodal {
                 .addContainerGap()
                 .addComponent(lblTitulo)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lblPesquisa)
+                .addGroup(panSuperiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblPesquisa)
+                    .addComponent(jLabel1))
                 .addGap(1, 1, 1)
-                .addComponent(txtBusca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(panSuperiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtBusca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cmbFiltro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(panSuperiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblNome)
@@ -393,32 +439,35 @@ public class frmUsuario extends frmGenericomodal {
                     .addComponent(lblEmail)
                     .addComponent(lblFuncao)
                     .addComponent(lblCelular)
-                    .addComponent(lblSenha))
+                    .addComponent(lblSenha)
+                    .addComponent(lblCpf))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(panSuperiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(panSuperiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtCpf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(panSuperiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(txtUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(ftxtCelular, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(ptxtSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtCelular, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(cmbPermissao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
 
         tblUsuario.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null}
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "ID", "NOME", "USUÁRIO", "EMAIL", "CELULAR", "PERMISSÃO", "DATA"
+                "ID", "NOME", "CPF", "USUÁRIO", "EMAIL", "CELULAR", "PERMISSÃO", "DATA"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -436,7 +485,9 @@ public class frmUsuario extends frmGenericomodal {
             tblUsuario.getColumnModel().getColumn(0).setMaxWidth(50);
         }
 
+        btnInserir.setBackground(new java.awt.Color(0, 153, 153));
         btnInserir.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnInserir.setForeground(java.awt.Color.white);
         btnInserir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recurso/salve-.png"))); // NOI18N
         btnInserir.setText("Inserir");
         btnInserir.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -447,7 +498,9 @@ public class frmUsuario extends frmGenericomodal {
             }
         });
 
+        btnEditar.setBackground(new java.awt.Color(255, 51, 0));
         btnEditar.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnEditar.setForeground(java.awt.Color.white);
         btnEditar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recurso/editar-codigo.png"))); // NOI18N
         btnEditar.setText("Editar");
         btnEditar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -463,7 +516,9 @@ public class frmUsuario extends frmGenericomodal {
             }
         });
 
+        btnApagar.setBackground(new java.awt.Color(0, 102, 153));
         btnApagar.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnApagar.setForeground(java.awt.Color.white);
         btnApagar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recurso/lixo.png"))); // NOI18N
         btnApagar.setText("Excluir");
         btnApagar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -474,7 +529,9 @@ public class frmUsuario extends frmGenericomodal {
             }
         });
 
+        btnVoltar.setBackground(new java.awt.Color(255, 0, 51));
         btnVoltar.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnVoltar.setForeground(java.awt.Color.white);
         btnVoltar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recurso/sair.png"))); // NOI18N
         btnVoltar.setText("Sair");
         btnVoltar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -485,7 +542,9 @@ public class frmUsuario extends frmGenericomodal {
             }
         });
 
+        btnLimpar.setBackground(new java.awt.Color(255, 51, 0));
         btnLimpar.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnLimpar.setForeground(java.awt.Color.white);
         btnLimpar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recurso/limpar-limpo.png"))); // NOI18N
         btnLimpar.setText("Limpar");
         btnLimpar.setToolTipText("Limpa os campos acima.");
@@ -502,20 +561,21 @@ public class frmUsuario extends frmGenericomodal {
         panInferiorLayout.setHorizontalGroup(
             panInferiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panInferiorLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 689, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panInferiorLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnInserir, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnApagar, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnLimpar, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnVoltar, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(panInferiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panInferiorLayout.createSequentialGroup()
+                        .addGap(34, 290, Short.MAX_VALUE)
+                        .addComponent(btnInserir, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnApagar, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnLimpar, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnVoltar, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(panInferiorLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jScrollPane1)))
                 .addContainerGap())
         );
         panInferiorLayout.setVerticalGroup(
@@ -536,11 +596,8 @@ public class frmUsuario extends frmGenericomodal {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(panSuperior, javax.swing.GroupLayout.PREFERRED_SIZE, 700, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(panInferior, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(panSuperior, javax.swing.GroupLayout.PREFERRED_SIZE, 823, Short.MAX_VALUE)
+            .addComponent(panInferior, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -589,11 +646,30 @@ public class frmUsuario extends frmGenericomodal {
         }
 
         private void filtrar() {
+            String coluna = cmbFiltro.getSelectedItem().toString();
+            int nColuna;
+            switch (coluna){
+                case "NOME": 
+                    nColuna = 1;
+                    break;
+                case "CPF":
+                    nColuna = 2;
+                    break;
+                case "USUÁRIO":
+                    nColuna = 3;
+                    break;
+                case "EMAIL":
+                    nColuna = 4;
+                    break;
+                default:
+                    nColuna = 1;
+                    break;
+            }
             String texto = txtBusca.getText();
             if (texto.trim().length() == 0) {
                 sorter.setRowFilter(null); // mostra todos os dados
             } else {
-                sorter.setRowFilter(RowFilter.regexFilter("(?i)" + texto, 1)); // coluna 1 = nome do usuário
+                sorter.setRowFilter(RowFilter.regexFilter("(?i)" + texto, nColuna)); // coluna 1 = nome do usuário
             }
         }
         });
@@ -612,6 +688,11 @@ public class frmUsuario extends frmGenericomodal {
             txtNome.requestFocus();
             return;
         }
+        if (txtCpf.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Informe o CPF.");
+            txtCpf.requestFocus();
+            return;
+        }
         if (txtUsuario.getText().isEmpty()) {
             JOptionPane.showMessageDialog(this, "Informe o usuario.");
             txtUsuario.requestFocus();
@@ -622,9 +703,9 @@ public class frmUsuario extends frmGenericomodal {
             txtEmail.requestFocus();
             return;
         }
-        if (ftxtCelular.getText().isEmpty()) {
+        if (txtCelular.getText().isEmpty()) {
             JOptionPane.showMessageDialog(this, "Informe o celular");
-            ftxtCelular.requestFocus();
+            txtCelular.requestFocus();
             return;
         }
         if (cmbPermissao.getSelectedItem().toString().isEmpty()) {
@@ -632,9 +713,9 @@ public class frmUsuario extends frmGenericomodal {
             cmbPermissao.requestFocus();
             return;
         }
-        if (ptxtSenha.getText().isEmpty()) {
+        if (txtSenha.getText().isEmpty()) {
             JOptionPane.showMessageDialog(this, "Informe a senha");
-            ptxtSenha.requestFocus();
+            txtSenha.requestFocus();
         }
         
         for (Permissao p : permissoes) {
@@ -652,15 +733,33 @@ public class frmUsuario extends frmGenericomodal {
             
             Usuario usuario = new Usuario();
             usuario.setNome(txtNome.getText());
+            usuario.setCpf(txtCpf.getText());
             usuario.setUsuario(txtUsuario.getText());
             usuario.setEmail(txtEmail.getText());
-            usuario.setCelular(ftxtCelular.getText());
+            usuario.setCelular(txtCelular.getText());
             usuario.setPermissao(permissao);
-            usuario.setSenha(Seguranca.hashSenha(ptxtSenha.getText()));
+            usuario.setSenha(Seguranca.hashSenha(txtSenha.getText()));
             usuario.setAltersenha(1);
             usuario.setData(new Date());
                  
+            if (!isValidCpf(txtCpf.getText())){
+                JOptionPane.showMessageDialog(this, "CPF Inválido!");
+                return;
+            }
+            
+             if (!isValidEmail(txtEmail.getText())){
+                JOptionPane.showMessageDialog(this, "Email Inválido!");
+                return;
+            }
+             
+             if (!isValidCelular(txtCelular.getText())){
+                JOptionPane.showMessageDialog(this, "Celular Inválido!");
+                return;
+            }
+            
             int linha = usuarioDAO.inserir(usuario);
+            
+            
             if (linha > 0) {
                 
                //Registra informações no log. 
@@ -709,6 +808,7 @@ public class frmUsuario extends frmGenericomodal {
     private void tblUsuarioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblUsuarioMouseClicked
         linhaSelecionada = tblUsuario.getSelectedRow();
         String Nome="";
+        String Cpf="";
         String Usuario="";
         String Email="";
         String Celular="";
@@ -717,18 +817,20 @@ public class frmUsuario extends frmGenericomodal {
         
         if(linhaSelecionada != -1) {
             Nome = tblUsuario.getValueAt(linhaSelecionada, 1).toString();
-            Usuario = tblUsuario.getValueAt(linhaSelecionada, 2).toString();
-            Email = tblUsuario.getValueAt(linhaSelecionada, 3).toString();
-            Celular = tblUsuario.getValueAt(linhaSelecionada, 4).toString();
-            Permissao = tblUsuario.getValueAt(linhaSelecionada, 5).toString();
-            Senha = tblUsuario.getValueAt(linhaSelecionada, 6).toString();
+            Cpf = tblUsuario.getValueAt(linhaSelecionada, 2).toString();
+            Usuario = tblUsuario.getValueAt(linhaSelecionada, 3).toString();
+            Email = tblUsuario.getValueAt(linhaSelecionada, 4).toString();
+            Celular = tblUsuario.getValueAt(linhaSelecionada, 5).toString();
+            Permissao = tblUsuario.getValueAt(linhaSelecionada, 6).toString();
+            Senha = tblUsuario.getValueAt(linhaSelecionada, 7).toString();
             
         }
         
         txtNome.setText(Nome);
+        txtCpf.setText(Cpf);
         txtUsuario.setText(Usuario);
         txtEmail.setText(Email);
-        ftxtCelular.setText(Celular);
+        txtCelular.setText(Celular);
    
         for (int i = 0;i < cmbPermissao.getItemCount(); i++) {
             Object item = cmbPermissao.getItemAt(i);
@@ -739,7 +841,7 @@ public class frmUsuario extends frmGenericomodal {
             }
         }
         
-        ptxtSenha.setText(Senha);
+        txtSenha.setText(Senha);
         
         carregarUsuario(idUsuario);
     }//GEN-LAST:event_tblUsuarioMouseClicked
@@ -767,12 +869,15 @@ public class frmUsuario extends frmGenericomodal {
             return;
         }
         
-       // float numero = 0;
-        
         //Verifica se há campo vazio.
         if (txtNome.getText().isEmpty()) {
             JOptionPane.showMessageDialog(this, "Informe o nome.");
             txtNome.requestFocus();
+            return;
+        }
+        if (txtCpf.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Informe o CPF.");
+            txtCpf.requestFocus();
             return;
         }
         if (txtUsuario.getText().isEmpty()) {
@@ -785,9 +890,9 @@ public class frmUsuario extends frmGenericomodal {
             txtEmail.requestFocus();
             return;
         }
-        if (ftxtCelular.getText().isEmpty()) {
+        if (txtCelular.getText().isEmpty()) {
             JOptionPane.showMessageDialog(this, "Informe o celular");
-            ftxtCelular.requestFocus();
+            txtCelular.requestFocus();
             return;
         }
         if (cmbPermissao.getSelectedItem().toString().isEmpty()) {
@@ -795,19 +900,13 @@ public class frmUsuario extends frmGenericomodal {
             cmbPermissao.requestFocus();
             return;
         }
-        if (ptxtSenha.getText().isEmpty()) {
+        if (txtSenha.getText().isEmpty()) {
             JOptionPane.showMessageDialog(this, "Informe a senha");
-            ptxtSenha.requestFocus();
+            txtSenha.requestFocus();
         }
         
-        if (txtNome.getText().equals(tNome) && txtUsuario.getText().equals(tUsuario) && txtEmail.getText().equals(tEmail) && ftxtCelular.getText().equals(tCelular) && cmbPermissao.getSelectedItem().toString().equalsIgnoreCase(bPermissao) && ptxtSenha.getText().equals(tSenha)){
+        if (txtNome.getText().equals(tNome) && txtUsuario.getText().equals(tUsuario) && txtEmail.getText().equals(tEmail) && txtCelular.getText().equals(tCelular) && cmbPermissao.getSelectedItem().toString().equalsIgnoreCase(bPermissao) && txtSenha.getText().equals(tSenha)){
             JOptionPane.showMessageDialog(this, "Não houve alteração nos dados acima!");
-            
-           /* try {
-                Thread.sleep(2000); // pausa de 2 segundos
-            } catch (InterruptedException e) {
-                e.printStackTrace(); // ou tratar de outra forma, como ignorar
-            }*/
     
             return;
         }
@@ -821,21 +920,19 @@ public class frmUsuario extends frmGenericomodal {
         
         try {
             
-            //List<Equipamento> equipamentos = equipamentoDAO.listar();
-            
             Permissao permissao = new Permissao();
             permissao.setId(idPermissao);
-            //equipamento.setNome(nomeEquipamento);
             
             // Cria o objeto Usuario com os dados dos campos
             Usuario usuario = new Usuario();
             usuario.setId(idUsuario);
             usuario.setNome(txtNome.getText());
+            usuario.setCpf(txtCpf.getText());
             usuario.setUsuario(txtUsuario.getText());
             usuario.setEmail(txtEmail.getText());
-            usuario.setCelular(ftxtCelular.getText());
+            usuario.setCelular(txtCelular.getText());
             usuario.setPermissao(permissao);
-            usuario.setSenha(Seguranca.hashSenha(ptxtSenha.getText())); // Se houver campo senha
+            usuario.setSenha(Seguranca.hashSenha(txtSenha.getText())); // Se houver campo senha
             usuario.setAltersenha(1);
             // Chama a função editar
             UsuarioDAO usuarioDAO = DAOFactory.criarUsuarioDAO();
@@ -957,7 +1054,7 @@ public class frmUsuario extends frmGenericomodal {
 
     private void txtNomeKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNomeKeyPressed
         if(evt.getKeyCode() == KeyEvent.VK_ENTER)
-            txtUsuario.requestFocus();
+            txtCpf.requestFocus();
     }//GEN-LAST:event_txtNomeKeyPressed
 
     private void txtUsuarioKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtUsuarioKeyPressed
@@ -967,13 +1064,13 @@ public class frmUsuario extends frmGenericomodal {
 
     private void txtEmailKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtEmailKeyPressed
         if(evt.getKeyCode() == KeyEvent.VK_ENTER)
-            ftxtCelular.requestFocus();        // TODO add your handling code here:
+            txtCelular.requestFocus();        // TODO add your handling code here:
     }//GEN-LAST:event_txtEmailKeyPressed
 
-    private void ftxtCelularKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_ftxtCelularKeyPressed
+    private void txtCelularKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCelularKeyPressed
         if(evt.getKeyCode() == KeyEvent.VK_ENTER)
             cmbPermissao.requestFocus();        // TODO add your handling code here:
-    }//GEN-LAST:event_ftxtCelularKeyPressed
+    }//GEN-LAST:event_txtCelularKeyPressed
 
     private void btnEditarFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_btnEditarFocusGained
         if (!txtNome.getText().isEmpty())
@@ -981,37 +1078,55 @@ public class frmUsuario extends frmGenericomodal {
     }//GEN-LAST:event_btnEditarFocusGained
 
     private void cmbPermissaoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cmbPermissaoKeyPressed
-        ptxtSenha.requestFocus();
+        txtSenha.requestFocus();
     }//GEN-LAST:event_cmbPermissaoKeyPressed
 
-    private void ptxtSenhaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ptxtSenhaMouseClicked
-        ptxtSenha.selectAll();
-    }//GEN-LAST:event_ptxtSenhaMouseClicked
+    private void txtSenhaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtSenhaMouseClicked
+        txtSenha.selectAll();
+    }//GEN-LAST:event_txtSenhaMouseClicked
 
     private void txtEmailFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtEmailFocusLost
-        if (!isValidEmail(txtEmail.getText())){
+        /*if (!isValidEmail(txtEmail.getText())){
             JOptionPane.showMessageDialog(this, "E-mail inválido!.");
-            txtEmail.requestFocus();
-        }        // TODO add your handling code here:
+            //txtEmail.requestFocus();
+        }*/        // TODO add your handling code here:
     }//GEN-LAST:event_txtEmailFocusLost
 
-    private void ftxtCelularFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_ftxtCelularFocusLost
-        if (!isValidCelular(ftxtCelular.getText())){
+    private void txtCelularFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCelularFocusLost
+        /*if (!isValidCelular(txtCelular.getText())){
             JOptionPane.showMessageDialog(this, "Celular inválido!.");
-            ftxtCelular.requestFocus();
-        }
+            //ftxtCelular.requestFocus();
+        }*/
                 // TODO add your handling code here:
-    }//GEN-LAST:event_ftxtCelularFocusLost
+    }//GEN-LAST:event_txtCelularFocusLost
+
+    private void txtCpfKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCpfKeyPressed
+        if(evt.getKeyCode() == KeyEvent.VK_ENTER)
+            txtUsuario.requestFocus();        // TODO add your handling code here:
+    }//GEN-LAST:event_txtCpfKeyPressed
+
+    private void txtCpfFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCpfFocusLost
+        /*if (!isValidCpf(txtCpf.getText())){
+            JOptionPane.showMessageDialog(this, "CPF inválido!.");
+            //txtCpf.requestFocus();
+        } */       // TODO add your handling code here:
+    }//GEN-LAST:event_txtCpfFocusLost
+
+    private void txtCpfMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtCpfMouseClicked
+        txtCpf.selectAll();        // TODO add your handling code here:
+    }//GEN-LAST:event_txtCpfMouseClicked
    
     //Limpa os campos da tabela e reseta combobox.
     private void limparCampos(){
         txtNome.setText("");
+        txtCpf.setText("");
         txtUsuario.setText("");
         txtEmail.setText("");
-        ftxtCelular.setText("");
+        txtCelular.setText("");
         cmbPermissao.setSelectedIndex(0);
-        ptxtSenha.setText("");
+        txtSenha.setText("");
         txtNome.requestFocus();
+        cmbFiltro.setSelectedIndex(0);
     }
     
     
@@ -1077,10 +1192,12 @@ public class frmUsuario extends frmGenericomodal {
     private javax.swing.JButton btnInserir;
     private javax.swing.JButton btnLimpar;
     private javax.swing.JButton btnVoltar;
+    private javax.swing.JComboBox<String> cmbFiltro;
     private javax.swing.JComboBox<String> cmbPermissao;
-    private javax.swing.JFormattedTextField ftxtCelular;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblCelular;
+    private javax.swing.JLabel lblCpf;
     private javax.swing.JLabel lblEmail;
     private javax.swing.JLabel lblFuncao;
     private javax.swing.JLabel lblNome;
@@ -1090,11 +1207,13 @@ public class frmUsuario extends frmGenericomodal {
     private javax.swing.JLabel lblUsuario;
     private javax.swing.JPanel panInferior;
     private javax.swing.JPanel panSuperior;
-    private javax.swing.JPasswordField ptxtSenha;
     private javax.swing.JTable tblUsuario;
     private javax.swing.JTextField txtBusca;
+    private javax.swing.JFormattedTextField txtCelular;
+    private javax.swing.JFormattedTextField txtCpf;
     private javax.swing.JTextField txtEmail;
     private javax.swing.JTextField txtNome;
+    private javax.swing.JPasswordField txtSenha;
     private javax.swing.JTextField txtUsuario;
     // End of variables declaration//GEN-END:variables
 }

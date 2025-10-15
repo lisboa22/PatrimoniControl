@@ -44,6 +44,10 @@ public class DAOFactory {
     public static MovimentacaoDAO criarMovimentacaoDAO() {
         return (MovimentacaoDAO) new MovimentacaoDAOJDBC();
     }
+    
+    public static ConfigsenhaDAO criarConfigsenhaDAO() {
+        return (ConfigsenhaDAO) new ConfigsenhaDAOJDBC();
+    }
     /*
     public static FormaPagamentoDAO criarFormaPagamentoDAO() {
         return (FormaPagamentoDAO) new FormaPagamentoDAOJDBC();

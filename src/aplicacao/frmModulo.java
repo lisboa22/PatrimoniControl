@@ -285,7 +285,9 @@ public class frmModulo extends frmGenericomodal {
                 .addContainerGap())
         );
 
+        btnInserir.setBackground(new java.awt.Color(0, 153, 153));
         btnInserir.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnInserir.setForeground(new java.awt.Color(255, 255, 255));
         btnInserir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recurso/salve-.png"))); // NOI18N
         btnInserir.setText("Inserir");
         btnInserir.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -296,7 +298,9 @@ public class frmModulo extends frmGenericomodal {
             }
         });
 
+        btnEditar.setBackground(new java.awt.Color(255, 51, 0));
         btnEditar.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnEditar.setForeground(new java.awt.Color(255, 255, 255));
         btnEditar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recurso/editar-codigo.png"))); // NOI18N
         btnEditar.setText("Editar");
         btnEditar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -312,7 +316,9 @@ public class frmModulo extends frmGenericomodal {
             }
         });
 
+        btnApagar.setBackground(new java.awt.Color(0, 102, 153));
         btnApagar.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnApagar.setForeground(new java.awt.Color(255, 255, 255));
         btnApagar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recurso/lixo.png"))); // NOI18N
         btnApagar.setText("Excluir");
         btnApagar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -323,7 +329,9 @@ public class frmModulo extends frmGenericomodal {
             }
         });
 
+        btnVoltar.setBackground(new java.awt.Color(255, 0, 51));
         btnVoltar.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnVoltar.setForeground(new java.awt.Color(255, 255, 255));
         btnVoltar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recurso/sair.png"))); // NOI18N
         btnVoltar.setText("Sair");
         btnVoltar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -334,7 +342,9 @@ public class frmModulo extends frmGenericomodal {
             }
         });
 
+        btnLimpar.setBackground(new java.awt.Color(255, 51, 0));
         btnLimpar.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnLimpar.setForeground(new java.awt.Color(255, 255, 255));
         btnLimpar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recurso/limpar-limpo.png"))); // NOI18N
         btnLimpar.setText("Limpar");
         btnLimpar.setToolTipText("Limpa os campos acima.");

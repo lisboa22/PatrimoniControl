@@ -195,6 +195,8 @@ public class frmUnidade extends frmGenericomodal {
         txtBusca = new javax.swing.JTextField();
         txtEmail = new javax.swing.JTextField();
         txtResponsavel = new javax.swing.JTextField();
+        cmbFiltro = new javax.swing.JComboBox<>();
+        lblFiltro = new javax.swing.JLabel();
         panInferior = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblUnidades = new javax.swing.JTable();
@@ -276,6 +278,11 @@ public class frmUnidade extends frmGenericomodal {
             }
         });
 
+        cmbFiltro.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "CONTA", "UNIDADE" }));
+
+        lblFiltro.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        lblFiltro.setText("FILTRO:");
+
         javax.swing.GroupLayout panSuperiorLayout = new javax.swing.GroupLayout(panSuperior);
         panSuperior.setLayout(panSuperiorLayout);
         panSuperiorLayout.setHorizontalGroup(
@@ -304,8 +311,14 @@ public class frmUnidade extends frmGenericomodal {
                         .addGroup(panSuperiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(lblResponsavel, javax.swing.GroupLayout.DEFAULT_SIZE, 111, Short.MAX_VALUE)
                             .addComponent(txtResponsavel)))
-                    .addComponent(lblPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtBusca, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(panSuperiorLayout.createSequentialGroup()
+                        .addGroup(panSuperiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtBusca, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(panSuperiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblFiltro, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cmbFiltro, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         panSuperiorLayout.setVerticalGroup(
@@ -314,9 +327,13 @@ public class frmUnidade extends frmGenericomodal {
                 .addGap(5, 5, 5)
                 .addComponent(lblTitulo)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lblPesquisa)
+                .addGroup(panSuperiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblPesquisa)
+                    .addComponent(lblFiltro))
                 .addGap(1, 1, 1)
-                .addComponent(txtBusca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(panSuperiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtBusca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cmbFiltro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(panSuperiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblConta)
@@ -364,7 +381,9 @@ public class frmUnidade extends frmGenericomodal {
             tblUnidades.getColumnModel().getColumn(0).setMaxWidth(50);
         }
 
+        btnInserir.setBackground(new java.awt.Color(0, 153, 153));
         btnInserir.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnInserir.setForeground(new java.awt.Color(255, 255, 255));
         btnInserir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recurso/salve-.png"))); // NOI18N
         btnInserir.setText("Inserir");
         btnInserir.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -375,7 +394,9 @@ public class frmUnidade extends frmGenericomodal {
             }
         });
 
+        btnEditar.setBackground(new java.awt.Color(255, 51, 0));
         btnEditar.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnEditar.setForeground(new java.awt.Color(255, 255, 255));
         btnEditar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recurso/editar-codigo.png"))); // NOI18N
         btnEditar.setText("Editar");
         btnEditar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -391,7 +412,9 @@ public class frmUnidade extends frmGenericomodal {
             }
         });
 
+        btnApagar.setBackground(new java.awt.Color(0, 102, 153));
         btnApagar.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnApagar.setForeground(new java.awt.Color(255, 255, 255));
         btnApagar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recurso/lixo.png"))); // NOI18N
         btnApagar.setText("Excluir");
         btnApagar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -402,7 +425,9 @@ public class frmUnidade extends frmGenericomodal {
             }
         });
 
+        btnVoltar.setBackground(new java.awt.Color(255, 0, 51));
         btnVoltar.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnVoltar.setForeground(new java.awt.Color(255, 255, 255));
         btnVoltar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recurso/sair.png"))); // NOI18N
         btnVoltar.setText("Sair");
         btnVoltar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -413,7 +438,9 @@ public class frmUnidade extends frmGenericomodal {
             }
         });
 
+        btnLimpar.setBackground(new java.awt.Color(255, 51, 0));
         btnLimpar.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnLimpar.setForeground(new java.awt.Color(255, 255, 255));
         btnLimpar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recurso/limpar-limpo.png"))); // NOI18N
         btnLimpar.setText("Limpar");
         btnLimpar.setToolTipText("Limpa os campos acima.");
@@ -516,11 +543,24 @@ public class frmUnidade extends frmGenericomodal {
         }
 
         private void filtrar() {
+            String coluna = cmbFiltro.getSelectedItem().toString();
+            int nColuna;
+            switch (coluna){
+                case "CONTA": 
+                    nColuna = 1;
+                    break;
+                case "UNIDADE":
+                    nColuna = 2;
+                    break;
+                default:
+                    nColuna = 1;
+                    break;
+            }
             String texto = txtBusca.getText();
             if (texto.trim().length() == 0) {
                 sorter.setRowFilter(null); // mostra todos os dados
             } else {
-                sorter.setRowFilter(RowFilter.regexFilter("(?i)" + texto, 1)); // coluna 1 = nome do usuário
+                sorter.setRowFilter(RowFilter.regexFilter("(?i)" + texto, nColuna)); // coluna 1 = nome do usuário
             }
         }
         });
@@ -868,6 +908,7 @@ public class frmUnidade extends frmGenericomodal {
         txtEmail.setText("");
         txtResponsavel.setText("");
         txtConta.requestFocus();
+        cmbFiltro.setSelectedIndex(0);
     }
     
     private void carregarUnidade(int id) {
@@ -933,9 +974,11 @@ public class frmUnidade extends frmGenericomodal {
     private javax.swing.JButton btnInserir;
     private javax.swing.JButton btnLimpar;
     private javax.swing.JButton btnVoltar;
+    private javax.swing.JComboBox<String> cmbFiltro;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblConta;
     private javax.swing.JLabel lblEmail;
+    private javax.swing.JLabel lblFiltro;
     private javax.swing.JLabel lblPesquisa;
     private javax.swing.JLabel lblResponsavel;
     private javax.swing.JLabel lblTelefone;

@@ -23,7 +23,7 @@ public class UnidadeDAOJDBC implements UnidadeDAO {
     public int inserir(Unidade unidade) throws ClassNotFoundException, SQLException, SQLIntegrityConstraintViolationException {
         StringBuilder sqlBuilder = new StringBuilder();
         sqlBuilder
-                .append("insert into unidades(conta, unidade, telefone, email, responsavel, data) ")
+                .append("insert into unidade(conta, unidade, telefone, email, responsavel, data) ")
                 .append("VALUES (?, ?, ?, ?, ?, ?)");
      
         String insert = sqlBuilder.toString();
@@ -40,7 +40,7 @@ public class UnidadeDAOJDBC implements UnidadeDAO {
             System.out.println(ex.getMessage().substring(17, 21));
             ex.printStackTrace();
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "bNão é possível inserir: o email já está vinculado a outro Usuário.");      
+            JOptionPane.showMessageDialog(null, "Não é possível inserir: o email já está vinculado a outro Usuário.");      
             ex.printStackTrace();
         } catch (Exception e) {
             e.printStackTrace();
@@ -53,7 +53,7 @@ public class UnidadeDAOJDBC implements UnidadeDAO {
     @Override
     public List<Unidade> listar() {
         ResultSet rset;
-        String select = "SELECT * FROM unidades ORDER BY id";
+        String select = "SELECT * FROM unidade ORDER BY id";
         List<Unidade> unidades = new ArrayList<>();
         try {        
             rset = DAOGenerico.executarConsulta(select);
@@ -78,7 +78,7 @@ public class UnidadeDAOJDBC implements UnidadeDAO {
     @Override
     public Unidade listar(int id) {
         ResultSet rset;
-        String select = "SELECT * FROM unidades WHERE id = ?";
+        String select = "SELECT * FROM unidade WHERE id = ?";
         Unidade unidade = new Unidade();
         try {        
             rset = DAOGenerico.executarConsulta(select,id);
@@ -104,7 +104,7 @@ public class UnidadeDAOJDBC implements UnidadeDAO {
     public int editar(Unidade unidade) {
       StringBuilder sqlBuilder = new StringBuilder();
         sqlBuilder
-                .append("UPDATE unidades SET ")
+                .append("UPDATE unidade SET ")
                 .append("conta = ?, ")
                 .append("unidade = ?, ")
                 .append("telefone = ?, ")
@@ -130,7 +130,7 @@ public class UnidadeDAOJDBC implements UnidadeDAO {
     public int apagar(int id) throws ClassNotFoundException, SQLException, SQLIntegrityConstraintViolationException {
         StringBuilder sqlBuilder = new StringBuilder();
         sqlBuilder
-                .append("DELETE FROM unidades ")
+                .append("DELETE FROM unidade ")
                 .append("WHERE id = ?");
         String delete = sqlBuilder.toString();
         int linha = 0;        

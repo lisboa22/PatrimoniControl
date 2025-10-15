@@ -4,6 +4,7 @@
  */
 package aplicacao;
 
+import dao.ConfigsenhaDAO;
 import dao.DAOFactory;
 import dao.LogDAO;
 import dao.ModuloDAO;
@@ -25,6 +26,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import javax.swing.SwingUtilities;
+import modelo.Configsenha;
 import modelo.Log;
 import modelo.Usuario;
 
@@ -36,6 +38,7 @@ import modelo.Usuario;
 public class frmConfiguracao extends frmGenericomodal {
     
     PermissaomoduloDAO permissaomoduloDAO = DAOFactory.criarPermissaomoduloDAO();
+    ConfigsenhaDAO configsenhaDAO = DAOFactory.criarConfigsenhaDAO();
     DefaultTableModel modelo = null;
     private int linhaSelecionada;
     private int tIdpermissao;
@@ -130,6 +133,22 @@ public class frmConfiguracao extends frmGenericomodal {
      * Utiliza formatação de data para exibição na tabela.
      */
     
+    private void verificaConfigsenha(){
+        List<Configsenha> configsenhas = configsenhaDAO. listar();
+   
+        // Obtém o valor da célula (será um Object, então converte para String ou Integer)
+        Object oLetramaiuscula = configsenhas.getFirst().isLetramaiuscula();
+        Object oLetraminuscula = configsenhas.getFirst().isLetraminuscula();
+        Object oCaracterespecial = configsenhas.getFirst().isCaracterespecial();
+        Object oNumeros = configsenhas.getFirst().isNumeros();
+        Object oMinimocaracter = configsenhas.getFirst().isMinimocaracter();
+
+        chkLetramaiuscula.setSelected((boolean) oLetramaiuscula);
+        chkLetraminuscula.setSelected((boolean) oLetraminuscula);
+        chkCaracterespecial.setSelected((boolean) oCaracterespecial);
+        chkNumeros.setSelected((boolean) oNumeros);
+        chkMinimocaracter.setSelected((boolean) oMinimocaracter);
+    }
     private void preencherTabela() {
         
         modelo.getDataVector().clear();
@@ -210,6 +229,13 @@ public class frmConfiguracao extends frmGenericomodal {
         btnVoltar = new javax.swing.JButton();
         btnLimpar = new javax.swing.JButton();
         btnLog = new javax.swing.JButton();
+        jPanel1 = new javax.swing.JPanel();
+        chkLetramaiuscula = new javax.swing.JCheckBox();
+        chkCaracterespecial = new javax.swing.JCheckBox();
+        chkNumeros = new javax.swing.JCheckBox();
+        chkMinimocaracter = new javax.swing.JCheckBox();
+        chkLetraminuscula = new javax.swing.JCheckBox();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Patrim - Configurações");
@@ -353,7 +379,9 @@ public class frmConfiguracao extends frmGenericomodal {
         });
         jScrollPane1.setViewportView(tblModulo);
 
+        btnEditar.setBackground(new java.awt.Color(255, 51, 0));
         btnEditar.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnEditar.setForeground(new java.awt.Color(255, 255, 255));
         btnEditar.setIcon(new javax.swing.ImageIcon("C:\\Users\\robson.SRVLISBOAINFO\\Desktop\\ProjPOO\\PatrimonioControl\\PatrimonioControl\\src\\recurso\\editar-codigo.png")); // NOI18N
         btnEditar.setText("Editar");
         btnEditar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -364,7 +392,9 @@ public class frmConfiguracao extends frmGenericomodal {
             }
         });
 
+        btnVoltar.setBackground(new java.awt.Color(255, 0, 51));
         btnVoltar.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnVoltar.setForeground(new java.awt.Color(255, 255, 255));
         btnVoltar.setIcon(new javax.swing.ImageIcon("C:\\Users\\robson.SRVLISBOAINFO\\Desktop\\ProjPOO\\PatrimonioControl\\PatrimonioControl\\src\\recurso\\sair.png")); // NOI18N
         btnVoltar.setText("Sair");
         btnVoltar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -375,7 +405,9 @@ public class frmConfiguracao extends frmGenericomodal {
             }
         });
 
+        btnLimpar.setBackground(new java.awt.Color(255, 51, 0));
         btnLimpar.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnLimpar.setForeground(new java.awt.Color(255, 255, 255));
         btnLimpar.setIcon(new javax.swing.ImageIcon("C:\\Users\\robson.SRVLISBOAINFO\\Desktop\\ProjPOO\\PatrimonioControl\\PatrimonioControl\\src\\recurso\\limpar-limpo.png")); // NOI18N
         btnLimpar.setText("Limpar");
         btnLimpar.setToolTipText("Limpa os campos acima.");
@@ -398,44 +430,128 @@ public class frmConfiguracao extends frmGenericomodal {
             }
         });
 
+        jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+        chkLetramaiuscula.setText("LETRA MAIÚSCULA");
+        chkLetramaiuscula.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                chkLetramaiusculaMouseClicked(evt);
+            }
+        });
+
+        chkCaracterespecial.setText("CARACTER ESPECIAL");
+        chkCaracterespecial.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                chkCaracterespecialMouseClicked(evt);
+            }
+        });
+
+        chkNumeros.setText("NÚMEROS");
+        chkNumeros.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                chkNumerosMouseClicked(evt);
+            }
+        });
+
+        chkMinimocaracter.setText("MÍNIMO DE CARACTERES");
+        chkMinimocaracter.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                chkMinimocaracterMouseClicked(evt);
+            }
+        });
+
+        chkLetraminuscula.setText("LETRA MINÚSCULA");
+        chkLetraminuscula.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                chkLetraminusculaMouseClicked(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(chkLetramaiuscula, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(chkCaracterespecial, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(chkNumeros, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(chkMinimocaracter, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(chkLetraminuscula, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(chkLetramaiuscula)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(chkLetraminuscula)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(chkCaracterespecial)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(chkNumeros)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(chkMinimocaracter)
+                .addContainerGap())
+        );
+
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel1.setText("OPÇÕES DE SENHA");
+
         javax.swing.GroupLayout panInferiorLayout = new javax.swing.GroupLayout(panInferior);
         panInferior.setLayout(panInferiorLayout);
         panInferiorLayout.setHorizontalGroup(
             panInferiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panInferiorLayout.createSequentialGroup()
-                .addGroup(panInferiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(panInferiorLayout.createSequentialGroup()
-                        .addGap(126, 126, 126)
-                        .addComponent(btnLog, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnLimpar, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnVoltar, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 27, Short.MAX_VALUE))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 570, Short.MAX_VALUE)
                 .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panInferiorLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnLog, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnLimpar, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnVoltar, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(35, 35, 35))
+            .addGroup(panInferiorLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(panInferiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         panInferiorLayout.setVerticalGroup(
             panInferiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panInferiorLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 48, Short.MAX_VALUE)
+                .addGap(1, 1, 1)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(panInferiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(btnEditar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnLimpar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnVoltar, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnLog, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(btnLog, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(panSuperior, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(panInferior, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(panSuperior, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(5, 5, 5))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addComponent(panInferior, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -443,8 +559,7 @@ public class frmConfiguracao extends frmGenericomodal {
                 .addContainerGap()
                 .addComponent(panSuperior, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(panInferior, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(panInferior, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -463,6 +578,7 @@ public class frmConfiguracao extends frmGenericomodal {
         preencherTabela();
         TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(modelo);
         tblModulo.setRowSorter(sorter);
+        verificaConfigsenha();
     }//GEN-LAST:event_formWindowGainedFocus
 
     /**
@@ -581,6 +697,57 @@ public class frmConfiguracao extends frmGenericomodal {
         }     
     }//GEN-LAST:event_btnEditarActionPerformed
 
+    private void editarConfigsenha(){
+        
+        try {
+                        
+            // Cria o objeto Usuario com os dados dos campos
+            Configsenha cs = new Configsenha();
+            cs.setLetramaiuscula(chkLetramaiuscula.isSelected());
+            cs.setLetraminuscula(chkLetraminuscula.isSelected());
+            cs.setCaracterespecial(chkCaracterespecial.isSelected());
+            cs.setNumeros(chkNumeros.isSelected());
+            cs.setMinimocaracter(chkMinimocaracter.isSelected());
+            
+            // Chama a função editar
+            ConfigsenhaDAO configsenhaDAO = DAOFactory.criarConfigsenhaDAO();
+            int resultado = configsenhaDAO.editar(cs);
+
+            if (resultado > 0) {
+                
+                //Registra informações no log. 
+                try{     
+
+                    List<Usuario> usuarios = usuarioDAO.listar();
+
+                    for (Usuario u : usuarios) {
+                        if(u.getId() == idUsuariosecao){
+                            nomeUsuariosecao = u.getNome();
+                        }
+                    }
+
+                    Log log = new Log();
+                    log.setAcao("Usuário: <"+nomeUsuariosecao+"> editou as opções de senha de acesso.");
+                    log.setData(new Date());
+
+                    int linha2 = logDAO.inserir(log);
+
+                }catch (Exception e){
+
+                }
+                
+                //JOptionPane.showMessageDialog(null, "Registro atualizado com sucesso.");
+                //limparCampos();
+            } else {
+                JOptionPane.showMessageDialog(null, "Falha ao atualizar o registro.");
+            }
+             
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Erro ao atualizar: " + ex.getMessage());
+        }
+    }
+    
     private void restaurarSelecaoTabela(int linha) {
         //preencherTabela();
         if (linha >= 0 && linha < tblModulo.getRowCount()) {
@@ -652,6 +819,26 @@ public class frmConfiguracao extends frmGenericomodal {
         log.setVisible(true);
         //new frmLog().setVisible(true);
     }//GEN-LAST:event_btnLogActionPerformed
+
+    private void chkLetramaiusculaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_chkLetramaiusculaMouseClicked
+        editarConfigsenha();
+    }//GEN-LAST:event_chkLetramaiusculaMouseClicked
+
+    private void chkCaracterespecialMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_chkCaracterespecialMouseClicked
+        editarConfigsenha();
+    }//GEN-LAST:event_chkCaracterespecialMouseClicked
+
+    private void chkNumerosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_chkNumerosMouseClicked
+        editarConfigsenha();
+    }//GEN-LAST:event_chkNumerosMouseClicked
+
+    private void chkMinimocaracterMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_chkMinimocaracterMouseClicked
+        editarConfigsenha();
+    }//GEN-LAST:event_chkMinimocaracterMouseClicked
+
+    private void chkLetraminusculaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_chkLetraminusculaMouseClicked
+        editarConfigsenha();
+    }//GEN-LAST:event_chkLetraminusculaMouseClicked
    
     //Limpa os campos da tabela e reseta combobox.
     private void limparCampos(){
@@ -707,10 +894,17 @@ public class frmConfiguracao extends frmGenericomodal {
     private javax.swing.JButton btnLog;
     private javax.swing.JButton btnVoltar;
     private javax.swing.JCheckBox chkAlterar;
+    private javax.swing.JCheckBox chkCaracterespecial;
     private javax.swing.JCheckBox chkExcluir;
     private javax.swing.JCheckBox chkInserir;
+    private javax.swing.JCheckBox chkLetramaiuscula;
+    private javax.swing.JCheckBox chkLetraminuscula;
+    private javax.swing.JCheckBox chkMinimocaracter;
+    private javax.swing.JCheckBox chkNumeros;
     private javax.swing.JCheckBox chkVisualizar;
     private javax.swing.JComboBox<String> cmbPermissao;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblModulo;
     private javax.swing.JLabel lblPermissao;

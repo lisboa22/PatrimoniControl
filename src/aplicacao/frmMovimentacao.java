@@ -6,6 +6,7 @@ package aplicacao;
 
 import static aplicacao.Validadores.isValidCelular;
 import static aplicacao.Validadores.isValidEmail;
+import static aplicacao.Validadores.mensagemErro;
 import dao.DAOFactory;
 import dao.EquipamentoDAO;
 import dao.ModuloDAO;
@@ -260,6 +261,10 @@ public class frmMovimentacao extends frmGenericomodal {
         cmbUsuariorecepcao = new javax.swing.JComboBox<>();
         lblObservacao = new javax.swing.JLabel();
         txtObservacao = new javax.swing.JTextField();
+        txtQuant = new javax.swing.JTextField();
+        lblQuant = new javax.swing.JLabel();
+        cmbFiltro = new javax.swing.JComboBox<>();
+        jLabel1 = new javax.swing.JLabel();
         panInferior = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblMovimentacao = new javax.swing.JTable();
@@ -289,7 +294,7 @@ public class frmMovimentacao extends frmGenericomodal {
 
         lblEquipamento.setBackground(new java.awt.Color(51, 51, 51));
         lblEquipamento.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        lblEquipamento.setText("EQUIPAMENTO*");
+        lblEquipamento.setText("EQUIPAMENTO");
 
         txtNumserie.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -301,13 +306,13 @@ public class frmMovimentacao extends frmGenericomodal {
         lblNumserie.setText("NÚMERO DE SÉRIE");
 
         lblTipomovimentacao.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        lblTipomovimentacao.setText("MOVIMENTACAO*");
+        lblTipomovimentacao.setText("MOVIMENTACAO");
 
         lblUsuarioliberacao.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         lblUsuarioliberacao.setText("LIBERAÇÃO");
 
         lblOrigem.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        lblOrigem.setText("ORIGEM*");
+        lblOrigem.setText("ORIGEM");
 
         lblTitulo.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         lblTitulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -335,6 +340,22 @@ public class frmMovimentacao extends frmGenericomodal {
             }
         });
 
+        txtQuant.setText("1");
+        txtQuant.setToolTipText("Informe quantos itens deseja cadastrar.");
+        txtQuant.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                txtQuantMouseClicked(evt);
+            }
+        });
+
+        lblQuant.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        lblQuant.setText("QUANTIDADE:");
+
+        cmbFiltro.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "EQUIPAMENTO", "NÚMERO DE SÉRIE", "MOVIMENTAÇÃO", "ORIGEM", "LIBERAÇÃO", "DESTINO", "RECEPÇÃO" }));
+
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel1.setText("FILTRO:");
+
         javax.swing.GroupLayout panSuperiorLayout = new javax.swing.GroupLayout(panSuperior);
         panSuperior.setLayout(panSuperiorLayout);
         panSuperiorLayout.setHorizontalGroup(
@@ -345,7 +366,7 @@ public class frmMovimentacao extends frmGenericomodal {
                     .addGroup(panSuperiorLayout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(lblPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(panSuperiorLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(panSuperiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -360,8 +381,16 @@ public class frmMovimentacao extends frmGenericomodal {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(panSuperiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(cmbTipomovimentacao, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblTipomovimentacao))
+                            .addComponent(lblTipomovimentacao)))
+                    .addGroup(panSuperiorLayout.createSequentialGroup()
+                        .addComponent(txtBusca, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(panSuperiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(cmbFiltro, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(panSuperiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panSuperiorLayout.createSequentialGroup()
                         .addGroup(panSuperiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lblOrigem, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(cmbOrigem, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -383,7 +412,9 @@ public class frmMovimentacao extends frmGenericomodal {
                             .addComponent(txtObservacao, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(171, 171, 171))
                     .addGroup(panSuperiorLayout.createSequentialGroup()
-                        .addComponent(txtBusca, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lblQuant)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtQuant, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         panSuperiorLayout.setVerticalGroup(
@@ -391,9 +422,15 @@ public class frmMovimentacao extends frmGenericomodal {
             .addGroup(panSuperiorLayout.createSequentialGroup()
                 .addComponent(lblTitulo)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lblPesquisa)
-                .addGap(3, 3, 3)
-                .addComponent(txtBusca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(panSuperiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblPesquisa)
+                    .addComponent(jLabel1))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(panSuperiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtBusca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblQuant)
+                    .addComponent(txtQuant, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cmbFiltro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(panSuperiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(panSuperiorLayout.createSequentialGroup()
@@ -435,7 +472,7 @@ public class frmMovimentacao extends frmGenericomodal {
                 {null, null, null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "ID", "EQUIPAMENTO", "NÚMERO SÉRIE", "MOVIMENTAÇÃO", "ORIGEM", "LIBERAÇÃO", "DESTINO", "RCEPÇÃO", "OBSERVAÇÕES", "DATA HORA"
+                "ID", "EQUIPAMENTO", "NÚMERO SÉRIE", "MOVIMENTAÇÃO", "ORIGEM", "LIBERAÇÃO", "DESTINO", "RECEPÇÃO", "OBSERVAÇÕES", "DATA HORA"
             }
         ) {
             Class[] types = new Class [] {
@@ -457,7 +494,9 @@ public class frmMovimentacao extends frmGenericomodal {
             tblMovimentacao.getColumnModel().getColumn(1).setMaxWidth(50);
         }
 
+        btnInserir.setBackground(new java.awt.Color(0, 153, 153));
         btnInserir.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnInserir.setForeground(new java.awt.Color(255, 255, 255));
         btnInserir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recurso/salve-.png"))); // NOI18N
         btnInserir.setText("Inserir");
         btnInserir.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -468,7 +507,9 @@ public class frmMovimentacao extends frmGenericomodal {
             }
         });
 
+        btnEditar.setBackground(new java.awt.Color(255, 51, 0));
         btnEditar.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnEditar.setForeground(new java.awt.Color(255, 255, 255));
         btnEditar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recurso/editar-codigo.png"))); // NOI18N
         btnEditar.setText("Editar");
         btnEditar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -479,7 +520,9 @@ public class frmMovimentacao extends frmGenericomodal {
             }
         });
 
+        btnApagar.setBackground(new java.awt.Color(0, 102, 153));
         btnApagar.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnApagar.setForeground(new java.awt.Color(255, 255, 255));
         btnApagar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recurso/lixo.png"))); // NOI18N
         btnApagar.setText("Excluir");
         btnApagar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -490,7 +533,9 @@ public class frmMovimentacao extends frmGenericomodal {
             }
         });
 
+        btnVoltar.setBackground(new java.awt.Color(255, 0, 51));
         btnVoltar.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnVoltar.setForeground(new java.awt.Color(255, 255, 255));
         btnVoltar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recurso/sair.png"))); // NOI18N
         btnVoltar.setText("Sair");
         btnVoltar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -501,7 +546,9 @@ public class frmMovimentacao extends frmGenericomodal {
             }
         });
 
+        btnLimpar.setBackground(new java.awt.Color(255, 51, 0));
         btnLimpar.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnLimpar.setForeground(new java.awt.Color(255, 255, 255));
         btnLimpar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recurso/limpar-limpo.png"))); // NOI18N
         btnLimpar.setText("Limpar");
         btnLimpar.setToolTipText("Limpa os campos acima.");
@@ -603,11 +650,39 @@ public class frmMovimentacao extends frmGenericomodal {
         }
 
         private void filtrar() {
+            String coluna = cmbFiltro.getSelectedItem().toString();
+            int nColuna;
+            switch (coluna){
+                case "EQUIPAMENTO": 
+                    nColuna = 1;
+                    break;
+                case "NÚMERO DE SÉRIE":
+                    nColuna = 2;
+                    break;
+                case "MOVIMENTAÇÃO":
+                    nColuna = 3;
+                    break;
+                case "ORIGEM":
+                    nColuna = 4;
+                    break;
+                case "LIBERAÇÃO":
+                    nColuna = 5;
+                    break;
+                case "DESTINO":
+                    nColuna = 6;
+                    break;
+                case "RECEPÇÃO":
+                    nColuna = 7;
+                    break;
+                default:
+                    nColuna = 1;
+                    break;
+            }  
             String texto = txtBusca.getText();
             if (texto.trim().length() == 0) {
                 sorter.setRowFilter(null); // mostra todos os dados
             } else {
-                sorter.setRowFilter(RowFilter.regexFilter("(?i)" + texto, 1)); // coluna 1 = nome do usuário
+                sorter.setRowFilter(RowFilter.regexFilter("(?i)" + texto, nColuna)); // coluna 1 = nome do usuário
             }
         }
         });
@@ -620,11 +695,11 @@ public class frmMovimentacao extends frmGenericomodal {
     private void btnInserirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInserirActionPerformed
      
         //Verifica se há campo vazio.
-        if (txtNumserie.getText().isEmpty()) {
+        /*if (txtNumserie.getText().isEmpty()) {
             JOptionPane.showMessageDialog(this, "Informe o numero de série.");
             txtNumserie.requestFocus();
             return;
-        }
+        }*/
         
         List<Equipamento> equipamentos = equipamentoDAO.listar();
         
@@ -685,6 +760,10 @@ public class frmMovimentacao extends frmGenericomodal {
         
         try {       
             
+            String txtQuantidade = txtQuant.getText();
+            int quant = Integer.parseInt(txtQuantidade) ;
+            for (int i = 1; i <= quant; i++){
+                
             Equipamento equipamento = new Equipamento();
             equipamento.setId(idEquipamento);
             //equipamento.setNome(rset.getString("nome_equipamento"));
@@ -741,13 +820,17 @@ public class frmMovimentacao extends frmGenericomodal {
                 }catch (Exception ex){
                     
                 }
-                
+                }
+            }
                 JOptionPane.showMessageDialog(this, "Registro inserido com sucesso!");
+                txtQuant.setText("1");
                  
-            } 
+             
         } catch (Exception ex) {    
-            JOptionPane.showMessageDialog(this, "Erro ao Inserir!");
+            JOptionPane.showMessageDialog(this, "Erro ao Inserir! Valor em (Quantidade) não numérico.");
+            ex.printStackTrace();
         }
+        
     }//GEN-LAST:event_btnInserirActionPerformed
 
     /**
@@ -1074,6 +1157,10 @@ public class frmMovimentacao extends frmGenericomodal {
     private void txtObservacaoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtObservacaoMouseClicked
         txtObservacao.selectAll();       // TODO add your handling code here:
     }//GEN-LAST:event_txtObservacaoMouseClicked
+
+    private void txtQuantMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtQuantMouseClicked
+        txtQuant.selectAll();
+    }//GEN-LAST:event_txtQuantMouseClicked
    
     //Limpa os campos da tabela e reseta combobox.
     private void limparCampos(){
@@ -1085,6 +1172,7 @@ public class frmMovimentacao extends frmGenericomodal {
         cmbDestino.setSelectedIndex(0);
         cmbUsuariorecepcao.setSelectedIndex(0);
         txtObservacao.setText("");
+        txtQuant.setText("1");
     }
     
     
@@ -1274,10 +1362,12 @@ public class frmMovimentacao extends frmGenericomodal {
     private javax.swing.JButton btnVoltar;
     private javax.swing.JComboBox<String> cmbDestino;
     private javax.swing.JComboBox<String> cmbEquipamento;
+    private javax.swing.JComboBox<String> cmbFiltro;
     private javax.swing.JComboBox<String> cmbOrigem;
     private javax.swing.JComboBox<String> cmbTipomovimentacao;
     private javax.swing.JComboBox<String> cmbUsuarioliberacao;
     private javax.swing.JComboBox<String> cmbUsuariorecepcao;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblDestino;
     private javax.swing.JLabel lblEquipamento;
@@ -1285,6 +1375,7 @@ public class frmMovimentacao extends frmGenericomodal {
     private javax.swing.JLabel lblObservacao;
     private javax.swing.JLabel lblOrigem;
     private javax.swing.JLabel lblPesquisa;
+    private javax.swing.JLabel lblQuant;
     private javax.swing.JLabel lblTipomovimentacao;
     private javax.swing.JLabel lblTitulo;
     private javax.swing.JLabel lblUsuarioliberacao;
@@ -1295,5 +1386,6 @@ public class frmMovimentacao extends frmGenericomodal {
     private javax.swing.JTextField txtBusca;
     private javax.swing.JTextField txtNumserie;
     private javax.swing.JTextField txtObservacao;
+    private javax.swing.JTextField txtQuant;
     // End of variables declaration//GEN-END:variables
 }

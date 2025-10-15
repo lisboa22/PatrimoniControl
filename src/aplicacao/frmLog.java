@@ -191,7 +191,9 @@ public class frmLog extends frmGenericomodal {
         tblLog.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jScrollPane1.setViewportView(tblLog);
 
+        btnVoltar.setBackground(new java.awt.Color(255, 0, 51));
         btnVoltar.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnVoltar.setForeground(new java.awt.Color(255, 255, 255));
         btnVoltar.setIcon(new javax.swing.ImageIcon("C:\\Users\\robson.SRVLISBOAINFO\\Desktop\\ProjPOO\\PatrimonioControl\\PatrimonioControl\\src\\recurso\\sair.png")); // NOI18N
         btnVoltar.setText("Sair");
         btnVoltar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
